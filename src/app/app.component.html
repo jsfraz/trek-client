@@ -99,16 +99,22 @@
           <span class="flex-1 ml-3 whitespace-nowrap">Trackers</span>
         </a>
       </li>
+
+    </ul>
+    <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
+      <li>
+        <a (click)="toggleDarkMode()"
+          class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <i class="bi" [ngClass]="isDarkMode ? 'bi-brightness-high-fill' : 'bi-moon-fill'"></i>
+          <span class="flex-1 ml-3 whitespace-nowrap">{{ isDarkMode ? 'Light' : 'Dark' }} mode</span>
+        </a>
+      </li>
     </ul>
   </div>
 </aside>
 
 <div class="p-4 sm:ml-64">
   <div class="p-4 mt-14 ">
-    <h1>TEST</h1>
-    <button (click)="toggleDarkMode()" class="px-4 py-2 bg-gray-500 text-white">
-      Toggle Dark Mode
-    </button>    
     <router-outlet></router-outlet>
   </div>
 </div>
