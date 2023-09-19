@@ -6,18 +6,14 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { ModelsLoginResponse } from '../../models/models-login-response';
+import { ModelsUser } from '../../models/models-user';
 
-export interface Login$Params {
-  password: string;
-  username: string;
+export interface GetAllUsers$Params {
 }
 
-export function login(http: HttpClient, rootUrl: string, params: Login$Params, context?: HttpContext): Observable<StrictHttpResponse<ModelsLoginResponse>> {
-  const rb = new RequestBuilder(rootUrl, login.PATH, 'post');
+export function getAllUsers(http: HttpClient, rootUrl: string, params?: GetAllUsers$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<ModelsUser>>> {
+  const rb = new RequestBuilder(rootUrl, getAllUsers.PATH, 'get');
   if (params) {
-    rb.query('password', params.password, {});
-    rb.query('username', params.username, {});
   }
 
   return http.request(
@@ -25,9 +21,9 @@ export function login(http: HttpClient, rootUrl: string, params: Login$Params, c
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<ModelsLoginResponse>;
+      return r as StrictHttpResponse<Array<ModelsUser>>;
     })
   );
 }
 
-login.PATH = '/api/auth/login';
+getAllUsers.PATH = '/api/user/all';

@@ -1,6 +1,11 @@
 import { Component, OnInit, Renderer2, Inject } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 import { DOCUMENT } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { UserService } from './api/services';
+import { AuthService } from './shared/auth.service';
+import { Utils } from 'src/main';
 
 @Component({
   selector: 'app-root',
@@ -8,14 +13,14 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'trek-client';
+  title = 'Trek';
 
   // dark/light mode
   isDarkMode: boolean = false;
 
   constructor(
     private renderer: Renderer2,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document, private userService: UserService, public authService: AuthService, public router: Router, public matDialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -23,6 +28,30 @@ export class AppComponent implements OnInit {
     this.getBrightnessMode();
     // init flowbite
     initFlowbite();
+
+    // check token
+    if (this.router.url != '/login') {
+      if (Utils.isTokenExpired()) {
+        this.router.navigate(['login'])
+      }
+    }
+
+    if (this.authService.isLoggedIn) {
+      this.userService.whoAmI().subscribe({
+        next: (v) => {
+          // kód pro úspěch
+          this.authService.currentUser = v;
+        },
+        error: (e) => {
+          // kód pro error
+          console.error(e);
+          this.authService.doLogout()
+        },
+        complete: () => {
+          // kód pro dokončení
+        }
+      });
+    }
   }
 
   // get brightness mode
@@ -55,5 +84,14 @@ export class AppComponent implements OnInit {
       this.renderer.setStyle(this.document.documentElement, 'background-color', '#1f2937');
     }
     this.isDarkMode = !this.isDarkMode;
+  }
+
+  // return admin or user
+  getUserType(): string {
+    if (this.authService.currentUser.superuser) {
+      return 'Administrator';
+    } else {
+      return 'Guest user';
+    }
   }
 }

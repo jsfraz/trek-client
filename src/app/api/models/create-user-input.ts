@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-export interface LoginInput {
+export interface CreateUserInput {
   password: string;
   username: string;
 }
