@@ -1,6 +1,7 @@
 <!-- https://flowbite.com/docs/components/sidebar/#sidebar-with-navbar -->
 <!-- show when logged -->
-<nav *ngIf="this.authService.isLoggedIn" class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+<nav *ngIf="this.authService.isLoggedIn"
+  class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
   <div class="px-3 py-3 lg:px-5 lg:pl-3">
     <div class="flex items-center justify-between">
       <div class="flex items-center justify-start">
@@ -11,17 +12,15 @@
           <i class="text-2xl dark:text-gray-400 text-black bi bi-list"></i>
         </button>
         <a href="/" class="flex ml-2 md:mr-24">
-          <!-- TODO change logo -->
-          <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="Trek Logo" />
+          <i class="text-3xl mr-2 dark:text-white text-black bi bi-compass"></i>
           <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Trek</span>
         </a>
       </div>
       <div class="flex items-center">
         <div class="flex items-center ml-3">
           <div>
-            <button type="button"
-              class="flex text-sm rounded-full"
-              aria-expanded="false" data-dropdown-toggle="dropdown-user">
+            <button type="button" class="flex text-sm rounded-full" aria-expanded="false"
+              data-dropdown-toggle="dropdown-user">
               <span class="sr-only">Open user menu</span>
               <i class="text-3xl dark:text-white bi bi-person-circle"></i>
             </button>
