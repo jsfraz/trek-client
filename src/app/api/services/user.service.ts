@@ -11,8 +11,8 @@ import { StrictHttpResponse } from '../strict-http-response';
 
 import { createUser } from '../fn/user/create-user';
 import { CreateUser$Params } from '../fn/user/create-user';
-import { deleteUsers } from '../fn/user/delete-users';
-import { DeleteUsers$Params } from '../fn/user/delete-users';
+import { deleteUser } from '../fn/user/delete-user';
+import { DeleteUser$Params } from '../fn/user/delete-user';
 import { getAllUsers } from '../fn/user/get-all-users';
 import { GetAllUsers$Params } from '../fn/user/get-all-users';
 import { ModelsUser } from '../models/models-user';
@@ -64,35 +64,35 @@ export class UserService extends BaseService {
     );
   }
 
-  /** Path part for operation `deleteUsers()` */
-  static readonly DeleteUsersPath = '/api/user';
+  /** Path part for operation `deleteUser()` */
+  static readonly DeleteUserPath = '/api/user';
 
   /**
-   * Delete users.
+   * Delete user.
    *
    *
    *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `deleteUsers()` instead.
+   * To access only the response body, use `deleteUser()` instead.
    *
    * This method doesn't expect any request body.
    */
-  deleteUsers$Response(params?: DeleteUsers$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return deleteUsers(this.http, this.rootUrl, params, context);
+  deleteUser$Response(params: DeleteUser$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return deleteUser(this.http, this.rootUrl, params, context);
   }
 
   /**
-   * Delete users.
+   * Delete user.
    *
    *
    *
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `deleteUsers$Response()` instead.
+   * To access the full response (for headers, for example), `deleteUser$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  deleteUsers(params?: DeleteUsers$Params, context?: HttpContext): Observable<void> {
-    return this.deleteUsers$Response(params, context).pipe(
+  deleteUser(params: DeleteUser$Params, context?: HttpContext): Observable<void> {
+    return this.deleteUser$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );
   }

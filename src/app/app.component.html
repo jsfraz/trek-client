@@ -11,7 +11,7 @@
           <span class="sr-only">Open sidebar</span>
           <i class="text-2xl dark:text-gray-400 text-black bi bi-list"></i>
         </button>
-        <a href="/" class="flex ml-2 md:mr-24">
+        <a (click)="this.router.navigate([''])" class="cursor-pointer flex ml-2 md:mr-24">
           <i class="text-3xl mr-2 dark:text-white text-black bi bi-compass"></i>
           <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Trek</span>
         </a>
@@ -56,22 +56,22 @@
   <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
     <ul class="space-y-2 font-medium">
       <li>
-        <a href="#"
-          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+        <a (click)="this.router.navigate(['map'])"
+          class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <i class="bi bi-map-fill"></i>
           <span class="ml-3">Map</span>
         </a>
       </li>
-      <li>
-        <a href="#"
-          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+      <li *ngIf="this.authService.currentUser.superuser">
+        <a (click)="this.router.navigate(['users'])"
+          class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <i class="bi bi-people-fill"></i>
           <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
         </a>
       </li>
-      <li>
-        <a href="#"
-          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+      <li *ngIf="this.authService.currentUser.superuser">
+        <a (click)="this.router.navigate(['trackers'])"
+          class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <i class="bi bi-geo-fill"></i>
           <span class="flex-1 ml-3 whitespace-nowrap">Trackers</span>
         </a>

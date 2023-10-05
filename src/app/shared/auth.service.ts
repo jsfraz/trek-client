@@ -18,21 +18,21 @@ export class AuthService {
   signIn(username: string, password: string) {
     this.authenticationService.login({ username: username, password: password }).subscribe({
       next: (v) => {
-        // kód pro úspěch
+        // success
         localStorage.setItem('access_token', v.accessToken);
         this.userService.whoAmI().subscribe(
           {
             next: (v) => {
-              // kód pro úspěch
+              // success
               this.currentUser = v;
               this.router.navigate(['']);
             },
             error: (e) => {
-              // kód pro error
+              // error
               console.error(e);
             },
             complete: () => {
-              // kód pro dokončení
+              // complete
               // init flowbite
               initFlowbite();
             }
@@ -40,7 +40,7 @@ export class AuthService {
         );
       },
       error: (e) => {
-        // kód pro error
+        // error
         const dialogConfig = new MatDialogConfig();
         dialogConfig.disableClose = false;
         dialogConfig.width = '500px';
@@ -48,7 +48,7 @@ export class AuthService {
         this.matDialog.open(AlertComponent, dialogConfig);
       },
       complete: () => {
-        // kód pro dokončení
+        // complete
       }
     });
   }

@@ -6,13 +6,16 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { UpdateTrackerNameInput } from '../../models/update-tracker-name-input';
 
-export interface DeleteUsers$Params {
+export interface UpdateTrackerName$Params {
+      body?: UpdateTrackerNameInput
 }
 
-export function deleteUsers(http: HttpClient, rootUrl: string, params?: DeleteUsers$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, deleteUsers.PATH, 'delete');
+export function updateTrackerName(http: HttpClient, rootUrl: string, params?: UpdateTrackerName$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  const rb = new RequestBuilder(rootUrl, updateTrackerName.PATH, 'patch');
   if (params) {
+    rb.body(params.body, 'application/json');
   }
 
   return http.request(
@@ -25,4 +28,4 @@ export function deleteUsers(http: HttpClient, rootUrl: string, params?: DeleteUs
   );
 }
 
-deleteUsers.PATH = '/api/user';
+updateTrackerName.PATH = '/api/tracker/name';

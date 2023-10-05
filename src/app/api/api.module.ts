@@ -5,7 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { AuthenticationService } from './services/authentication.service';
+import { TrackerService } from './services/tracker.service';
 import { UserService } from './services/user.service';
+import { GnssDataService } from './services/gnss-data.service';
 
 /**
  * Module that provides all services and configuration.
@@ -16,7 +18,9 @@ import { UserService } from './services/user.service';
   declarations: [],
   providers: [
     AuthenticationService,
+    TrackerService,
     UserService,
+    GnssDataService,
     ApiConfiguration
   ],
 })

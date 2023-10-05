@@ -39,16 +39,16 @@ export class AppComponent implements OnInit {
     if (this.authService.isLoggedIn) {
       this.userService.whoAmI().subscribe({
         next: (v) => {
-          // kód pro úspěch
+          // success
           this.authService.currentUser = v;
         },
         error: (e) => {
-          // kód pro error
+          // error
           console.error(e);
           this.authService.doLogout()
         },
         complete: () => {
-          // kód pro dokončení
+          // complete
         }
       });
     }

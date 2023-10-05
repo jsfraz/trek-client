@@ -12,13 +12,15 @@ import { MapComponent } from './map/map.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule} from '@angular/forms';
 import { AuthInterceptor } from './shared/authconfig.interceptor';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AlertComponent,
     LoginComponent,
-    MapComponent
+    MapComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
