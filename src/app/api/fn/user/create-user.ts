@@ -6,16 +6,17 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { CreateUserInput } from '../../models/create-user-input';
 
 export interface CreateUser$Params {
-      body?: CreateUserInput
+  password: string;
+  username: string;
 }
 
-export function createUser(http: HttpClient, rootUrl: string, params?: CreateUser$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+export function createUser(http: HttpClient, rootUrl: string, params: CreateUser$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
   const rb = new RequestBuilder(rootUrl, createUser.PATH, 'post');
   if (params) {
-    rb.body(params.body, 'application/json');
+    rb.query('password', params.password, {});
+    rb.query('username', params.username, {});
   }
 
   return http.request(

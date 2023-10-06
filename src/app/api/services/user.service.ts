@@ -42,9 +42,9 @@ export class UserService extends BaseService {
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `createUser()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
-  createUser$Response(params?: CreateUser$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  createUser$Response(params: CreateUser$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
     return createUser(this.http, this.rootUrl, params, context);
   }
 
@@ -56,9 +56,9 @@ export class UserService extends BaseService {
    * This method provides access only to the response body.
    * To access the full response (for headers, for example), `createUser$Response()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
-  createUser(params?: CreateUser$Params, context?: HttpContext): Observable<void> {
+  createUser(params: CreateUser$Params, context?: HttpContext): Observable<void> {
     return this.createUser$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );
@@ -108,9 +108,9 @@ export class UserService extends BaseService {
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `updateUser()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
-  updateUser$Response(params?: UpdateUser$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  updateUser$Response(params: UpdateUser$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
     return updateUser(this.http, this.rootUrl, params, context);
   }
 
@@ -122,9 +122,9 @@ export class UserService extends BaseService {
    * This method provides access only to the response body.
    * To access the full response (for headers, for example), `updateUser$Response()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
-  updateUser(params?: UpdateUser$Params, context?: HttpContext): Observable<void> {
+  updateUser(params: UpdateUser$Params, context?: HttpContext): Observable<void> {
     return this.updateUser$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );

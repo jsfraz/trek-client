@@ -13,6 +13,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule} from '@angular/forms';
 import { AuthInterceptor } from './shared/authconfig.interceptor';
 import { UserComponent } from './user/user.component';
+import { CreateUserComponent } from './create-user/create-user.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { TrackerComponent } from './tracker/tracker.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { UserComponent } from './user/user.component';
     AlertComponent,
     LoginComponent,
     MapComponent,
-    UserComponent
+    UserComponent,
+    CreateUserComponent,
+    EditUserComponent,
+    TrackerComponent
   ],
   imports: [
     BrowserModule,
