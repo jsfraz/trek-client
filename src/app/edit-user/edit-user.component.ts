@@ -28,7 +28,7 @@ export class EditUserComponent {
     this.userService.updateUser({ id: this.data.id, username: username, password: password }).subscribe({
       next: (v) => {
         // success
-        this.dialogRef.close(true)
+        this.dialogRef.close(true);
       },
       error: (e) => {
         // error

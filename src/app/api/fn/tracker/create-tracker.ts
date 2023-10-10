@@ -6,17 +6,16 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { CreateTrackerInput } from '../../models/create-tracker-input';
 import { ModelsTrackerToken } from '../../models/models-tracker-token';
 
 export interface CreateTracker$Params {
-      body?: CreateTrackerInput
+  name: string;
 }
 
-export function createTracker(http: HttpClient, rootUrl: string, params?: CreateTracker$Params, context?: HttpContext): Observable<StrictHttpResponse<ModelsTrackerToken>> {
+export function createTracker(http: HttpClient, rootUrl: string, params: CreateTracker$Params, context?: HttpContext): Observable<StrictHttpResponse<ModelsTrackerToken>> {
   const rb = new RequestBuilder(rootUrl, createTracker.PATH, 'post');
   if (params) {
-    rb.body(params.body, 'application/json');
+    rb.query('name', params.name, {});
   }
 
   return http.request(

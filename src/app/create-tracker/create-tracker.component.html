@@ -1,14 +1,9 @@
 <!-- TODO dark mode -->
 <div class="max-w-md mx-auto bg-white p-8">
-  <form [formGroup]="createForm" (ngSubmit)="createUser()">
+  <form [formGroup]="createForm" (ngSubmit)="createTracker()">
     <div class="mb-4">
-      <label for="username" class="block text-gray-700 font-semibold mb-2">Username</label>
-      <input type="text" formControlName="username" name="username"
-        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
-    </div>
-    <div class="mb-4">
-      <label for="password" class="block text-gray-700 font-semibold mb-2">Password</label>
-      <input type="password" formControlName="password" name="password"
+      <label for="name" class="block text-gray-700 font-semibold mb-2">Name</label>
+      <input type="text" formControlName="name" name="name"
         class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
     </div>
     <div class="flex justify-center space-x-4">

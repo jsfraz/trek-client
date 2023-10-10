@@ -7,14 +7,14 @@ import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
 
-export interface DeleteTrackers$Params {
-  ids: Array<number>;
+export interface DeleteTracker$Params {
+  id: number;
 }
 
-export function deleteTrackers(http: HttpClient, rootUrl: string, params: DeleteTrackers$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, deleteTrackers.PATH, 'delete');
+export function deleteTracker(http: HttpClient, rootUrl: string, params: DeleteTracker$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  const rb = new RequestBuilder(rootUrl, deleteTracker.PATH, 'delete');
   if (params) {
-    rb.query('ids', params.ids, {"style":"form","explode":true});
+    rb.query('id', params.id, {});
   }
 
   return http.request(
@@ -27,4 +27,4 @@ export function deleteTrackers(http: HttpClient, rootUrl: string, params: Delete
   );
 }
 
-deleteTrackers.PATH = '/api/tracker';
+deleteTracker.PATH = '/api/tracker';

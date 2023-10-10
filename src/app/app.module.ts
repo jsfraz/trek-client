@@ -16,6 +16,8 @@ import { UserComponent } from './user/user.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { TrackerComponent } from './tracker/tracker.component';
+import { CreateTrackerComponent } from './create-tracker/create-tracker.component';
+import { TokenComponent } from './token/token.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { TrackerComponent } from './tracker/tracker.component';
     UserComponent,
     CreateUserComponent,
     EditUserComponent,
-    TrackerComponent
+    TrackerComponent,
+    CreateTrackerComponent,
+    TokenComponent
   ],
   imports: [
     BrowserModule,

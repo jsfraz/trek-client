@@ -11,8 +11,8 @@ import { StrictHttpResponse } from '../strict-http-response';
 
 import { createTracker } from '../fn/tracker/create-tracker';
 import { CreateTracker$Params } from '../fn/tracker/create-tracker';
-import { deleteTrackers } from '../fn/tracker/delete-trackers';
-import { DeleteTrackers$Params } from '../fn/tracker/delete-trackers';
+import { deleteTracker } from '../fn/tracker/delete-tracker';
+import { DeleteTracker$Params } from '../fn/tracker/delete-tracker';
 import { getAllTrackers } from '../fn/tracker/get-all-trackers';
 import { GetAllTrackers$Params } from '../fn/tracker/get-all-trackers';
 import { ModelsTracker } from '../models/models-tracker';
@@ -43,9 +43,9 @@ export class TrackerService extends BaseService {
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `createTracker()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
-  createTracker$Response(params?: CreateTracker$Params, context?: HttpContext): Observable<StrictHttpResponse<ModelsTrackerToken>> {
+  createTracker$Response(params: CreateTracker$Params, context?: HttpContext): Observable<StrictHttpResponse<ModelsTrackerToken>> {
     return createTracker(this.http, this.rootUrl, params, context);
   }
 
@@ -57,43 +57,43 @@ export class TrackerService extends BaseService {
    * This method provides access only to the response body.
    * To access the full response (for headers, for example), `createTracker$Response()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
-  createTracker(params?: CreateTracker$Params, context?: HttpContext): Observable<ModelsTrackerToken> {
+  createTracker(params: CreateTracker$Params, context?: HttpContext): Observable<ModelsTrackerToken> {
     return this.createTracker$Response(params, context).pipe(
       map((r: StrictHttpResponse<ModelsTrackerToken>): ModelsTrackerToken => r.body)
     );
   }
 
-  /** Path part for operation `deleteTrackers()` */
-  static readonly DeleteTrackersPath = '/api/tracker';
+  /** Path part for operation `deleteTracker()` */
+  static readonly DeleteTrackerPath = '/api/tracker';
 
   /**
-   * Delete trackers.
+   * Delete tracker.
    *
    *
    *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `deleteTrackers()` instead.
+   * To access only the response body, use `deleteTracker()` instead.
    *
    * This method doesn't expect any request body.
    */
-  deleteTrackers$Response(params: DeleteTrackers$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return deleteTrackers(this.http, this.rootUrl, params, context);
+  deleteTracker$Response(params: DeleteTracker$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return deleteTracker(this.http, this.rootUrl, params, context);
   }
 
   /**
-   * Delete trackers.
+   * Delete tracker.
    *
    *
    *
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `deleteTrackers$Response()` instead.
+   * To access the full response (for headers, for example), `deleteTracker$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  deleteTrackers(params: DeleteTrackers$Params, context?: HttpContext): Observable<void> {
-    return this.deleteTrackers$Response(params, context).pipe(
+  deleteTracker(params: DeleteTracker$Params, context?: HttpContext): Observable<void> {
+    return this.deleteTracker$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );
   }

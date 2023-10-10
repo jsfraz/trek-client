@@ -27,7 +27,7 @@ export class CreateUserComponent {
     this.userService.createUser({ username: username, password: password }).subscribe({
       next: (v) => {
         // success
-        this.dialogRef.close(true)
+        this.dialogRef.close(true);
       },
       error: (e) => {
         // error

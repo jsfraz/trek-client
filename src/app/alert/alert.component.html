@@ -1,5 +1,6 @@
+<!-- TODO dark mode -->
 <div class="bg-white p-4 rounded-lg shadow-lg">
-    <h1 class="text-2xl font-semibold text-red-600 mb-4">Chyba</h1>
+    <h1 class="text-2xl font-semibold text-red-600 mb-4">Error</h1>
     <h2 class="text-red-500 mb-4">{{this.data.statusText}}</h2>
     <div *ngIf="this.data.status != 0 && this.data.error != null" class="bg-gray-200 p-4 rounded mb-4">
         <pre><code class="whitespace-pre-wrap">{{this.formatErrorStringAsPrettyJSON(this.data.error)}}</code></pre>
