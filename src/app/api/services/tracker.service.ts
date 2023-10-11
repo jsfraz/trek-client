@@ -142,9 +142,9 @@ export class TrackerService extends BaseService {
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `updateTrackerName()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
-  updateTrackerName$Response(params?: UpdateTrackerName$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  updateTrackerName$Response(params: UpdateTrackerName$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
     return updateTrackerName(this.http, this.rootUrl, params, context);
   }
 
@@ -156,9 +156,9 @@ export class TrackerService extends BaseService {
    * This method provides access only to the response body.
    * To access the full response (for headers, for example), `updateTrackerName$Response()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
-  updateTrackerName(params?: UpdateTrackerName$Params, context?: HttpContext): Observable<void> {
+  updateTrackerName(params: UpdateTrackerName$Params, context?: HttpContext): Observable<void> {
     return this.updateTrackerName$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );

@@ -6,4 +6,3 @@ export { ModelsLoginResponse } from './models/models-login-response';
 export { ModelsTracker } from './models/models-tracker';
 export { ModelsTrackerToken } from './models/models-tracker-token';
 export { ModelsUser } from './models/models-user';
-export { UpdateTrackerNameInput } from './models/update-tracker-name-input';

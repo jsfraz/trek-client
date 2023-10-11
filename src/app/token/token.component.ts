@@ -7,12 +7,8 @@ import { Clipboard } from '@angular/cdk/clipboard';
   templateUrl: './token.component.html',
   styleUrls: ['./token.component.css']
 })
-export class TokenComponent implements OnInit {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<TokenComponent>, private clipboard: Clipboard) { }
-
-  ngOnInit(): void {
-    console.info(this.data);
-  }
+export class TokenComponent {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: string, public dialogRef: MatDialogRef<TokenComponent>, private clipboard: Clipboard) { }
 
   // closes dialog and copies token to clipboard
   closeAndCopy(): void {

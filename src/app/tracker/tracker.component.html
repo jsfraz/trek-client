@@ -18,11 +18,11 @@
                     <td class="py-3 px-4 text-center">
                         <div class="flex items-center justify-end">
                             <button class="p-2 rounded dark:hover:bg-gray-400 hover:bg-gray-200 mr-1"
-                                (click)="openEditNameDialog(tracker)">
+                                (click)="openEditNameDialog(tracker.id)">
                                 <i class="bi bi-pencil-fill text-black dark:text-white"></i>
                             </button>
                             <button class="p-2 rounded dark:hover:bg-gray-400 hover:bg-gray-200 mr-1"
-                                (click)="openRegenerateKeyDialog(tracker.id)">
+                                (click)="regenerateToken(tracker.id)">
                                 <i class="bi bi-key-fill text-black dark:text-white"></i>
                             </button>
                             <button class="p-2 rounded dark:hover:bg-red-400 hover:bg-red-300"

@@ -18,6 +18,7 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { TrackerComponent } from './tracker/tracker.component';
 import { CreateTrackerComponent } from './create-tracker/create-tracker.component';
 import { TokenComponent } from './token/token.component';
+import { EditTrackerComponent } from './edit-tracker/edit-tracker.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { TokenComponent } from './token/token.component';
     EditUserComponent,
     TrackerComponent,
     CreateTrackerComponent,
-    TokenComponent
+    TokenComponent,
+    EditTrackerComponent,
   ],
   imports: [
     BrowserModule,

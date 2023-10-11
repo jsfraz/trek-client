@@ -6,16 +6,17 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { UpdateTrackerNameInput } from '../../models/update-tracker-name-input';
 
 export interface UpdateTrackerName$Params {
-      body?: UpdateTrackerNameInput
+  id: number;
+  name: string;
 }
 
-export function updateTrackerName(http: HttpClient, rootUrl: string, params?: UpdateTrackerName$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+export function updateTrackerName(http: HttpClient, rootUrl: string, params: UpdateTrackerName$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
   const rb = new RequestBuilder(rootUrl, updateTrackerName.PATH, 'patch');
   if (params) {
-    rb.body(params.body, 'application/json');
+    rb.query('id', params.id, {});
+    rb.query('name', params.name, {});
   }
 
   return http.request(
