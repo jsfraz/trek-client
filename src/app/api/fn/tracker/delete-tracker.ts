@@ -7,16 +7,14 @@ import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
 
-export interface CreateUser$Params {
-  password: string;
-  username: string;
+export interface DeleteTracker$Params {
+  id: number;
 }
 
-export function createUser(http: HttpClient, rootUrl: string, params: CreateUser$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, createUser.PATH, 'post');
+export function deleteTracker(http: HttpClient, rootUrl: string, params: DeleteTracker$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  const rb = new RequestBuilder(rootUrl, deleteTracker.PATH, 'delete');
   if (params) {
-    rb.query('password', params.password, {});
-    rb.query('username', params.username, {});
+    rb.query('id', params.id, {});
   }
 
   return http.request(
@@ -29,4 +27,4 @@ export function createUser(http: HttpClient, rootUrl: string, params: CreateUser
   );
 }
 
-createUser.PATH = '/api/user';
+deleteTracker.PATH = '/api/tracker';

@@ -7,16 +7,16 @@ import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
 
-export interface CreateUser$Params {
-  password: string;
-  username: string;
+export interface UpdateTrackerName$Params {
+  id: number;
+  name: string;
 }
 
-export function createUser(http: HttpClient, rootUrl: string, params: CreateUser$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, createUser.PATH, 'post');
+export function updateTrackerName(http: HttpClient, rootUrl: string, params: UpdateTrackerName$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  const rb = new RequestBuilder(rootUrl, updateTrackerName.PATH, 'patch');
   if (params) {
-    rb.query('password', params.password, {});
-    rb.query('username', params.username, {});
+    rb.query('id', params.id, {});
+    rb.query('name', params.name, {});
   }
 
   return http.request(
@@ -29,4 +29,4 @@ export function createUser(http: HttpClient, rootUrl: string, params: CreateUser
   );
 }
 
-createUser.PATH = '/api/user';
+updateTrackerName.PATH = '/api/tracker/name';

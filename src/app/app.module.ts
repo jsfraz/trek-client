@@ -12,13 +12,27 @@ import { MapComponent } from './map/map.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule} from '@angular/forms';
 import { AuthInterceptor } from './shared/authconfig.interceptor';
+import { UserComponent } from './user/user.component';
+import { CreateUserComponent } from './create-user/create-user.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { TrackerComponent } from './tracker/tracker.component';
+import { CreateTrackerComponent } from './create-tracker/create-tracker.component';
+import { TokenComponent } from './token/token.component';
+import { EditTrackerComponent } from './edit-tracker/edit-tracker.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AlertComponent,
     LoginComponent,
-    MapComponent
+    MapComponent,
+    UserComponent,
+    CreateUserComponent,
+    EditUserComponent,
+    TrackerComponent,
+    CreateTrackerComponent,
+    TokenComponent,
+    EditTrackerComponent,
   ],
   imports: [
     BrowserModule,

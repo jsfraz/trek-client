@@ -6,16 +6,19 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { UpdateUserInput } from '../../models/update-user-input';
 
 export interface UpdateUser$Params {
-      body?: UpdateUserInput
+  id: number;
+  password?: string;
+  username: string;
 }
 
-export function updateUser(http: HttpClient, rootUrl: string, params?: UpdateUser$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+export function updateUser(http: HttpClient, rootUrl: string, params: UpdateUser$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
   const rb = new RequestBuilder(rootUrl, updateUser.PATH, 'patch');
   if (params) {
-    rb.body(params.body, 'application/json');
+    rb.query('id', params.id, {});
+    rb.query('password', params.password, {});
+    rb.query('username', params.username, {});
   }
 
   return http.request(

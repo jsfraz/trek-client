@@ -1,6 +1,7 @@
 <!-- https://flowbite.com/docs/components/sidebar/#sidebar-with-navbar -->
 <!-- show when logged -->
-<nav *ngIf="this.authService.isLoggedIn" class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+<nav *ngIf="this.authService.isLoggedIn"
+  class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
   <div class="px-3 py-3 lg:px-5 lg:pl-3">
     <div class="flex items-center justify-between">
       <div class="flex items-center justify-start">
@@ -10,18 +11,16 @@
           <span class="sr-only">Open sidebar</span>
           <i class="text-2xl dark:text-gray-400 text-black bi bi-list"></i>
         </button>
-        <a href="/" class="flex ml-2 md:mr-24">
-          <!-- TODO change logo -->
-          <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="Trek Logo" />
+        <a (click)="this.router.navigate([''])" class="cursor-pointer flex ml-2 md:mr-24">
+          <i class="text-3xl mr-2 dark:text-white text-black bi bi-compass"></i>
           <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Trek</span>
         </a>
       </div>
       <div class="flex items-center">
         <div class="flex items-center ml-3">
           <div>
-            <button type="button"
-              class="flex text-sm rounded-full"
-              aria-expanded="false" data-dropdown-toggle="dropdown-user">
+            <button type="button" class="flex text-sm rounded-full" aria-expanded="false"
+              data-dropdown-toggle="dropdown-user">
               <span class="sr-only">Open user menu</span>
               <i class="text-3xl dark:text-white bi bi-person-circle"></i>
             </button>
@@ -57,22 +56,22 @@
   <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
     <ul class="space-y-2 font-medium">
       <li>
-        <a href="#"
-          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+        <a (click)="this.router.navigate([''])"
+          class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <i class="bi bi-map-fill"></i>
           <span class="ml-3">Map</span>
         </a>
       </li>
-      <li>
-        <a href="#"
-          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+      <li *ngIf="this.authService.currentUser.superuser">
+        <a (click)="this.router.navigate(['users'])"
+          class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <i class="bi bi-people-fill"></i>
           <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
         </a>
       </li>
-      <li>
-        <a href="#"
-          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+      <li *ngIf="this.authService.currentUser.superuser">
+        <a (click)="this.router.navigate(['trackers'])"
+          class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <i class="bi bi-geo-fill"></i>
           <span class="flex-1 ml-3 whitespace-nowrap">Trackers</span>
         </a>
