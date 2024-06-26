@@ -1,0 +1,148 @@
+<!-- https://flowbite.com/docs/components/sidebar/#sidebar-with-navbar -->
+<!-- show when logged -->
+<nav
+  *ngIf="this.authService.isLoggedIn"
+  class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700"
+>
+  <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center justify-start">
+        <button
+          data-drawer-target="logo-sidebar"
+          data-drawer-toggle="logo-sidebar"
+          aria-controls="logo-sidebar"
+          type="button"
+          class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        >
+          <span class="sr-only">Open sidebar</span>
+          <i class="text-2xl dark:text-gray-400 text-black bi bi-list"></i>
+        </button>
+        <a
+          (click)="this.router.navigate([''])"
+          class="cursor-pointer flex ml-2 md:mr-24"
+        >
+          <span
+            class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white"
+            >Trek</span
+          >
+        </a>
+      </div>
+      <div class="flex items-center">
+        <div class="flex items-center ml-3">
+          <div>
+            <button
+              type="button"
+              class="flex text-sm rounded-full"
+              aria-expanded="false"
+              data-dropdown-toggle="dropdown-user"
+            >
+              <span class="sr-only">Open user menu</span>
+              <i class="text-3xl dark:text-white bi bi-person-circle"></i>
+            </button>
+          </div>
+          <div
+            class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
+            id="dropdown-user"
+          >
+            <div class="px-4 py-3" role="none">
+              <p class="text-sm text-gray-900 dark:text-white" role="none">
+                {{ this.authService.currentUser.username }}
+              </p>
+              <p
+                class="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
+                role="none"
+              >
+                {{ getUserType() }}
+              </p>
+            </div>
+            <ul class="py-1" role="none">
+              <li>
+                <a
+                  (click)="this.authService.doLogout()"
+                  class="cursor-pointer block px-4 py-2 text-sm dark:text-red-600 text-red-700 hover:bg-gray-100 dark:hover:bg-gray-600"
+                  role="menuitem"
+                  >Sign out</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- show when logged -->
+<aside
+  *ngIf="this.authService.isLoggedIn"
+  id="logo-sidebar"
+  class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+  aria-label="Sidebar"
+>
+  <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+    <ul class="space-y-2 font-medium">
+      <li>
+        <a
+          (click)="this.router.navigate([''])"
+          class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+        >
+          <i class="bi bi-map-fill"></i>
+          <span class="ml-3">Map</span>
+        </a>
+      </li>
+      <li *ngIf="this.authService.currentUser.superuser">
+        <a
+          (click)="this.router.navigate(['users'])"
+          class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+        >
+          <i class="bi bi-people-fill"></i>
+          <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
+        </a>
+      </li>
+      <li *ngIf="this.authService.currentUser.superuser">
+        <a
+          (click)="this.router.navigate(['trackers'])"
+          class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+        >
+          <i class="bi bi-geo-fill"></i>
+          <span class="flex-1 ml-3 whitespace-nowrap">Trackers</span>
+        </a>
+      </li>
+      <li *ngIf="this.authService.currentUser.superuser">
+        <a
+          (click)="this.router.navigate(['setup'])"
+          class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+        >
+          <i class="bi bi-tools"></i>
+          <span class="flex-1 ml-3 whitespace-nowrap">Tracker setup</span>
+        </a>
+      </li>
+    </ul>
+    <ul
+      class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700"
+    >
+      <li>
+        <a
+          (click)="toggleDarkMode()"
+          class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+        >
+          <i
+            class="bi"
+            [ngClass]="isDarkMode ? 'bi-brightness-high-fill' : 'bi-moon-fill'"
+          ></i>
+          <span class="flex-1 ml-3 whitespace-nowrap"
+            >{{ isDarkMode ? "Light" : "Dark" }} mode</span
+          >
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>
+<!-- show when logged -->
+<div *ngIf="this.authService.isLoggedIn" class="p-4 sm:ml-64">
+  <div class="p-4 mt-14">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<!-- show when not logged -->
+<router-outlet *ngIf="!this.authService.isLoggedIn"></router-outlet>

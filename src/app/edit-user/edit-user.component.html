@@ -1,0 +1,27 @@
+<!-- TODO dark mode -->
+<div class="max-w-md mx-auto bg-white p-8">
+  <form [formGroup]="updateForm" (ngSubmit)="updateUser()">
+    <div class="mb-4">
+      <label for="username" class="block text-gray-700 font-semibold mb-2">Username</label>
+      <input type="text" formControlName="username" name="username"
+        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+    </div>
+    <div class="mb-4">
+      <label for="password" class="block text-gray-700 font-semibold mb-2">New password<span
+          class="text-red-500">*</span></label>
+      <input type="password" formControlName="password" name="password"
+        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+    </div>
+    <p class="text-xs text-gray-500 my-2.5"><span class="text-red-500">*</span>If you do not wish to edit, leave blank.
+    </p>
+    <div class="flex justify-center space-x-4">
+      <button type="submit"
+        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">
+        Update
+      </button>
+      <button type="button"
+        class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring focus:border-gray-300"
+        (click)="this.dialogRef.close(false)">Close</button>
+    </div>
+  </form>
+</div>

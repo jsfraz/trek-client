@@ -1,0 +1,14 @@
+/* Light mode background color */
+body {
+    background-color: #ffffff;
+}
+
+/* Dark mode background color */
+body.dark {
+    background-color: #1f2937;
+}
+
+/*
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+*/

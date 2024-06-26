@@ -1,0 +1,102 @@
+<div class="container mx-auto dark:text-white text-black">
+  <h1 class="text-3xl font-bold text-center mb-8">Tracker Setup</h1>
+
+  <p class="text-lg mt-8">
+    Following tutorial will show you how to install and configure software to
+    your Raspberry Pi.
+  </p>
+
+  <h2 class="text-2xl font-bold mt-8">Step 1: Generate API key in frontend</h2>
+  <p class="mt-4">
+    Create new tracker in <strong>Trackers section</strong> and copy the
+    generated API key. You will need it in step 3.
+  </p>
+
+  <h2 class="text-2xl font-bold mt-8">Step 2: Download and install DEB file</h2>
+  <p class="mt-4">
+    To begin, download the DEB file from
+    <a href="{{ this.debUrl }}" class="text-blue-500">this link</a>
+    and transfer it to your Raspberry Pi. Alternatively, you can directly
+    download it to your Raspberry Pi using the following command in the console:
+  </p>
+  <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">
+wget {{ this.debUrl }}</pre
+  >
+
+  <p class="mt-4">
+    Once downloaded, navigate to the directory where the DEB file is located and
+    run the following command to install it:
+  </p>
+  <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">
+sudo dpkg -i trek-tracker-latest.deb</pre
+  >
+
+  <h2 class="text-2xl font-bold mt-8">Step 3: Configure trek-tracker</h2>
+  <p class="mt-4">
+    The configuration file for trek-tracker is located at
+    <strong>/etc/trek-tracker/trek-tracker.conf</strong>. It should look like
+    this:
+  </p>
+  <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">
+[trek-tracker]
+Https = false
+ServerAddress = trek.example.com
+ServerPort = 8080
+ApiKey = generate_your_key_in_frontend
+ReconnectDelay = 1
+InitialReconnectDelay = 10
+BaudRate = 115200</pre
+  >
+
+  <p class="mt-4">
+    Make sure to adjust the values according to your setup. Specifically, you
+    may want to change the following settings:
+  </p>
+
+  <ul class="list-disc ml-8">
+    <li>
+      <strong>Https:</strong> Set to <code>true</code> if you're using HTTPS,
+      otherwise set it to <code>false</code>.
+    </li>
+    <li>
+      <strong>ServerAddress:</strong> Set to the IP address or hostname of your
+      server.
+    </li>
+    <li>
+      <strong>ServerPort:</strong> Set to the port number on which your server
+      is running.
+    </li>
+    <li>
+      <strong>ApiKey:</strong> Replace
+      <code>generate_your_key_in_frontend</code> with the API key obtained from
+      your frontend application.
+    </li>
+    <li>
+      <strong>ReconnectDelay:</strong> Set the delay (in seconds) for the device
+      to attempt reconnection after disconnection.
+    </li>
+    <li>
+      <strong>InitialReconnectDelay:</strong> Set the initial delay (in seconds)
+      before the device attempts reconnection for the first time.
+    </li>
+    <li>
+      <strong>BaudRate:</strong> Set the baud rate for serial communication with
+      your GPS device.
+    </li>
+  </ul>
+
+  <h2 class="text-2xl font-bold mt-8">Step 4: Restart the service</h2>
+  <p class="mt-4">
+    To apply the changes made in the configuration file, you need to restart the
+    <strong>trek-tracker.service</strong>. You can do this by running the
+    following command:
+  </p>
+  <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">
+sudo systemctl restart trek-tracker.service</pre
+  >
+
+  <h2 class="text-2xl font-bold mt-8">You are done!</h2>
+  <p class="mt-4">
+    Congratulations! You have completed the setup process for the tracker.
+  </p>
+</div>

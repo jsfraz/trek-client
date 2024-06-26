@@ -1,0 +1,24 @@
+<div class="bg-repeat h-screen flex items-center justify-center dark:text-white"
+    style="background-image: url('assets/images/login.jpg');">
+    <div class="dark:bg-gray-800 bg-white p-8 rounded shadow-lg max-w-md w-full">
+        <h2 class="text-2xl mb-6 text-center font-semibold">Login</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+            <div class="mb-4">
+                <label for="username" class="block text-sm font-bold mb-2">Username</label>
+                <input type="text" formControlName="username" name="username"
+                    class="dark:bg-gray-700 w-full px-3 py-2 border dark:border-gray-500 border-gray-300 rounded"
+                    placeholder="Enter your username" required>
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-sm font-bold mb-2">Password</label>
+                <input type="password" formControlName="password" name="password"
+                    class="dark:bg-gray-700 w-full px-3 py-2 border dark:border-gray-500 border-gray-300 rounded"
+                    placeholder="Enter your password" required>
+            </div>
+            <button type="submit"
+                class="bg-blue-500 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue active:bg-blue-700 text-white">
+                Login
+            </button>
+        </form>
+    </div>
+</div>
