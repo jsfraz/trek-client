@@ -6,12 +6,14 @@ import { environment } from '../../environments/environment';
   templateUrl: './setup.component.html',
   styleUrls: ['./setup.component.css']
 })
-export class SetupComponent implements OnInit {
+export class SetupComponent {
 
-  debUrl = '';
+  // TODO change when newer version is released
+  debUrl = 'https://github.com/jsfraz/trek-tracker/releases/download/1.0.0/trek-tracker-1.0.0.deb';
 
-  ngOnInit(): void {
-    // Set baseUrl
-    this.debUrl = environment.baseApiUrl + '/download/trek-tracker-latest.deb'
+  // Return deb file name
+  getFileName(): string {
+    const parts = this.debUrl.split('/');
+    return parts[parts.length - 1];
   }
 }
