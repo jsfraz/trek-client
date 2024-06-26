@@ -16,7 +16,7 @@
             <tbody>
                 <tr *ngFor="let user of users" class="border-b border-gray-200 dark:border-gray-700">
                     <td class="py-2 px-4 text-center">{{user.username}}</td>
-                    <td class="py-2 px-4 text-center">{{user.superuser}}</td>
+                    <td class="py-2 px-4 text-center">{{user.superuser ? 'Yes' : 'No'}}</td>
                     <td class="py-3 px-4 text-center">
                         <div class="flex items-center justify-end">
                             <button *ngIf="!user.superuser"

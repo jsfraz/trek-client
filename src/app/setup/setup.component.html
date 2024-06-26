@@ -20,16 +20,14 @@
     download it to your Raspberry Pi using the following command in the console:
   </p>
   <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">
-wget {{ this.debUrl }}</pre
-  >
+wget {{ this.debUrl }}</pre>
 
   <p class="mt-4">
     Once downloaded, navigate to the directory where the DEB file is located and
     run the following command to install it:
   </p>
   <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">
-sudo dpkg -i trek-tracker-latest.deb</pre
-  >
+sudo dpkg -i {{this.getFileName()}}</pre>
 
   <h2 class="text-2xl font-bold mt-8">Step 3: Configure trek-tracker</h2>
   <p class="mt-4">
@@ -45,8 +43,7 @@ ServerPort = 8080
 ApiKey = generate_your_key_in_frontend
 ReconnectDelay = 1
 InitialReconnectDelay = 10
-BaudRate = 115200</pre
-  >
+BaudRate = 115200</pre>
 
   <p class="mt-4">
     Make sure to adjust the values according to your setup. Specifically, you
@@ -92,8 +89,7 @@ BaudRate = 115200</pre
     following command:
   </p>
   <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">
-sudo systemctl restart trek-tracker.service</pre
-  >
+sudo systemctl restart trek-tracker.service</pre>
 
   <h2 class="text-2xl font-bold mt-8">You are done!</h2>
   <p class="mt-4">
