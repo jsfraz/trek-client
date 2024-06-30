@@ -2,17 +2,30 @@
   <h1 class="text-3xl font-bold text-center mb-8">Tracker Setup</h1>
 
   <p class="text-lg mt-8">
-    Following tutorial will show you how to install and configure software to
+    Following tutorial will show you how to install and configure software on
     your Raspberry Pi.
   </p>
 
   <h2 class="text-2xl font-bold mt-8">Step 1: Generate API key in frontend</h2>
   <p class="mt-4">
-    Create new tracker in <strong>Trackers section</strong> and copy the
-    generated API key. You will need it in step 3.
+    Create new tracker in <a class="underline" href="/trackers">Trackers section</a> and copy the
+    generated API key. You will need it in step 5.
   </p>
 
-  <h2 class="text-2xl font-bold mt-8">Step 2: Download and install DEB file</h2>
+  <h2 class="text-2xl font-bold mt-8">Step 2: Make sure you have Python installed</h2>
+  <p class="mt-4">
+    Install Python and it's package manager.
+  </p>
+  <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">sudo apt update
+sudo apt install python3 python3-pip</pre>
+
+  <h2 class="text-2xl font-bold mt-8">Step 3: Install dependencies</h2>
+  <p class="mt-4">
+    Install tracker dependencies.
+  </p>
+  <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">pip3 install -r requirements.txt</pre>
+
+  <h2 class="text-2xl font-bold mt-8">Step 4: Download and install DEB package</h2>
   <p class="mt-4">
     To begin, download the DEB file from
     <a href="{{ this.debUrl }}" class="text-blue-500">this link</a>
@@ -29,7 +42,7 @@ wget {{ this.debUrl }}</pre>
   <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">
 sudo dpkg -i {{this.getFileName()}}</pre>
 
-  <h2 class="text-2xl font-bold mt-8">Step 3: Configure trek-tracker</h2>
+  <h2 class="text-2xl font-bold mt-8">Step 5: Configure trek-tracker</h2>
   <p class="mt-4">
     The configuration file for trek-tracker is located at
     <strong>/etc/trek-tracker/trek-tracker.conf</strong>. It should look like
@@ -82,7 +95,7 @@ BaudRate = 115200</pre>
     </li>
   </ul>
 
-  <h2 class="text-2xl font-bold mt-8">Step 4: Restart the service</h2>
+  <h2 class="text-2xl font-bold mt-8">Step 6: Restart the service</h2>
   <p class="mt-4">
     To apply the changes made in the configuration file, you need to restart the
     <strong>trek-tracker.service</strong>. You can do this by running the
