@@ -8,7 +8,7 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@a
 import { LoginComponent } from './login/login.component';
 import { MapComponent } from './map/map.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './shared/authconfig.interceptor';
 import { UserComponent } from './user/user.component';
 import { CreateUserComponent } from './create-user/create-user.component';
@@ -18,11 +18,13 @@ import { CreateTrackerComponent } from './create-tracker/create-tracker.componen
 import { TokenComponent } from './token/token.component';
 import { EditTrackerComponent } from './edit-tracker/edit-tracker.component';
 import { SetupComponent } from './setup/setup.component';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ApiModule } from './api/api.module';
 import { environment } from 'src/environments/environment';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
-@NgModule({ declarations: [
+@NgModule({
+    declarations: [
         AppComponent,
         AlertComponent,
         LoginComponent,
@@ -36,15 +38,22 @@ import { environment } from 'src/environments/environment';
         EditTrackerComponent,
         SetupComponent,
     ],
-    bootstrap: [AppComponent], imports: [ApiModule.forRoot({ rootUrl: environment.baseApiUrl }), // Set baseApiUrl
+    imports: [
+        ApiModule.forRoot({ rootUrl: environment.baseApiUrl }), // Set baseApiUrl
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
         MatDialogModule,
         ReactiveFormsModule,
-        MatTooltipModule], providers: [{
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthInterceptor,
-            multi: true,
-        }, provideHttpClient(withInterceptorsFromDi())] })
+        MatTooltipModule,
+        LeafletModule,
+    ],
+    providers: [{
+        provide: HTTP_INTERCEPTORS,
+        useClass: AuthInterceptor,
+        multi: true,
+    }, provideHttpClient(withInterceptorsFromDi())],
+    bootstrap: [AppComponent],
+})
+
 export class AppModule { }

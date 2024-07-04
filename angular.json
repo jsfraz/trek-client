@@ -30,7 +30,8 @@
               "node_modules/tailwindcss/base.css",
               "node_modules/tailwindcss/components.css",
               "node_modules/tailwindcss/utilities.css",
-              "node_modules/bootstrap-icons/font/bootstrap-icons.css"
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": [],
             "browser": "src/main.ts"
