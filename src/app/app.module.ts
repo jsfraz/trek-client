@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AlertComponent } from './alert/alert.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { MapComponent } from './map/map.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -22,36 +22,29 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { ApiModule } from './api/api.module';
 import { environment } from 'src/environments/environment';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    AlertComponent,
-    LoginComponent,
-    MapComponent,
-    UserComponent,
-    CreateUserComponent,
-    EditUserComponent,
-    TrackerComponent,
-    CreateTrackerComponent,
-    TokenComponent,
-    EditTrackerComponent,
-    SetupComponent,
-  ],
-  imports: [
-    ApiModule.forRoot({rootUrl: environment.baseApiUrl}),   // Set baseApiUrl
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatDialogModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    MatTooltipModule
-  ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true,
-  }],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        AlertComponent,
+        LoginComponent,
+        MapComponent,
+        UserComponent,
+        CreateUserComponent,
+        EditUserComponent,
+        TrackerComponent,
+        CreateTrackerComponent,
+        TokenComponent,
+        EditTrackerComponent,
+        SetupComponent,
+    ],
+    bootstrap: [AppComponent], imports: [ApiModule.forRoot({ rootUrl: environment.baseApiUrl }), // Set baseApiUrl
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatDialogModule,
+        ReactiveFormsModule,
+        MatTooltipModule], providers: [{
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true,
+        }, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
