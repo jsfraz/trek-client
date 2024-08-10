@@ -1,3 +1,15 @@
+<div class="flex justify-between p-2">
+    <div>
+        <span class="text-gray-900 dark:text-white">TODO from to and tracker</span>
+    </div>
+    <a (click)="toggleDarkMap()"
+        class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-[122px]">
+        <i class="bi" [ngClass]="isDarkMode ? 'bi-brightness-high-fill' : 'bi-moon-fill'"></i>
+        <span class="flex-1 ml-3 whitespace-nowrap">{{ isDarkMode ? "Light" : "Dark" }} mode</span>
+    </a>
+</div>
+<!-- TODO FIX height -->
 <div class="max-h-screen h-screen">
-    <div leaflet [leafletOptions]="options" style="height: 100%; width: 100%;" class="z-10"></div>
+    <div leaflet [leafletOptions]="options" style="height: 100%; width: 100%;" class="z-10"
+        [ngClass]="isDarkMode ? 'dark-map' : ''"></div>
 </div>
