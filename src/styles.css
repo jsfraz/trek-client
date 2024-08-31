@@ -8,7 +8,11 @@ body.dark {
     background-color: #1f2937;
 }
 
-/*
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-*/
+body {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* Display dialog content as block */
+.mat-mdc-dialog-component-host {
+    display: block !important;
+}
