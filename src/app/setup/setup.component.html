@@ -9,13 +9,19 @@
   <h2 class="text-2xl font-bold mt-8">Step 1: Generate API key in frontend</h2>
   <p class="mt-4">
     Create new tracker in <a class="underline" href="/trackers">Trackers section</a> and copy the
-    generated API key. You will need it in step 5.
+    generated API key. You will need it in step 4.
   </p>
 
-  <h2 class="text-2xl font-bold mt-8">Step 2: Download and install DEB package</h2>
+  <h2 class="text-2xl font-bold mt-8">Step 2: Power on/power off button</h2>
+  To enable powering off with the button you <strong>must</strong> add following lone to the end of <code>/boot/config.txt</code> file:
+  <p class="mt-4">
+    <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">
+      dtoverlay=gpio-shutdown</pre>
+
+  <h2 class="text-2xl font-bold mt-8">Step 3: Download and install DEB package</h2>
   <p class="mt-4">
     To begin, download the DEB file from
-    <a href="{{ this.debUrl }}" class="text-blue-500">this link</a>
+    <a href="{{ this.debUrl }}" class="underline">this link</a>
     and transfer it to your Raspberry Pi. Alternatively, you can directly
     download it to your Raspberry Pi using the following command in the terminal:
   </p>
@@ -29,10 +35,10 @@ wget {{ this.debUrl }}</pre>
   <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">
 sudo dpkg -i {{this.getFileName()}}</pre>
 
-  <h2 class="text-2xl font-bold mt-8">Step 3: Configure trek-tracker</h2>
+  <h2 class="text-2xl font-bold mt-8">Step 4: Configure trek-tracker</h2>
   <p class="mt-4">
     During installation you will be prompted to configure the tracker. If you refuse, you can change it afterwards. The
-    configuration file is located at <strong>/etc/trek-tracker/trek-tracker.conf</strong>. It should look like this:
+    configuration file is located at <code>/etc/trek-tracker/trek-tracker.conf</code>. It should look like this:
   </p>
   <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">
 [trek-tracker]
@@ -77,21 +83,25 @@ BaudRate = 115200</pre>
     </li>
     <li>
       <strong>BaudRate:</strong> Set the baud rate for serial communication with
-      your GPS device.
+      your GPS module.
     </li>
   </ul>
 
-  <h2 class="text-2xl font-bold mt-8">Step 4: Restart the service and the device (optional)</h2>
+  <h2 class="text-2xl font-bold mt-8">Step 5: Restart the service and the device (optional)</h2>
   <p class="mt-4">
     If you configured the tracker manually after installation, you need to restart the
-    <strong>trek-tracker.service</strong>. You can do this by running the
+    <code>trek-tracker.service</code>. You can do this by running the
     following command:
   </p>
   <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">
 sudo systemctl restart trek-tracker.service</pre>
   <p class="mt-4">
-    If you did not reboot the device after installation, it is recommended to do so for the software to work properly.
+    If you did not reboot the device after installation, it is recommended to do so for the software and power button to work properly.
+    You can do this by running the
+    following command:
   </p>
+  <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">
+sudo systemctl restart trek-tracker.service</pre>
 
   <h2 class="text-2xl font-bold mt-8">You are done!</h2>
   <p class="mt-4">
