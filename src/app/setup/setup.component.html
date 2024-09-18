@@ -12,25 +12,12 @@
     generated API key. You will need it in step 5.
   </p>
 
-  <h2 class="text-2xl font-bold mt-8">Step 2: Make sure you have Python installed</h2>
-  <p class="mt-4">
-    Install Python and it's package manager.
-  </p>
-  <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">sudo apt update
-sudo apt install python3 python3-pip</pre>
-
-  <h2 class="text-2xl font-bold mt-8">Step 3: Install dependencies</h2>
-  <p class="mt-4">
-    Install tracker dependencies.
-  </p>
-  <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">pip3 install -r requirements.txt</pre>
-
-  <h2 class="text-2xl font-bold mt-8">Step 4: Download and install DEB package</h2>
+  <h2 class="text-2xl font-bold mt-8">Step 2: Download and install DEB package</h2>
   <p class="mt-4">
     To begin, download the DEB file from
     <a href="{{ this.debUrl }}" class="text-blue-500">this link</a>
     and transfer it to your Raspberry Pi. Alternatively, you can directly
-    download it to your Raspberry Pi using the following command in the console:
+    download it to your Raspberry Pi using the following command in the terminal:
   </p>
   <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">
 wget {{ this.debUrl }}</pre>
@@ -42,11 +29,10 @@ wget {{ this.debUrl }}</pre>
   <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">
 sudo dpkg -i {{this.getFileName()}}</pre>
 
-  <h2 class="text-2xl font-bold mt-8">Step 5: Configure trek-tracker</h2>
+  <h2 class="text-2xl font-bold mt-8">Step 3: Configure trek-tracker</h2>
   <p class="mt-4">
-    The configuration file for trek-tracker is located at
-    <strong>/etc/trek-tracker/trek-tracker.conf</strong>. It should look like
-    this:
+    During installation you will be prompted to configure the tracker. If you refuse, you can change it afterwards. The
+    configuration file is located at <strong>/etc/trek-tracker/trek-tracker.conf</strong>. It should look like this:
   </p>
   <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">
 [trek-tracker]
@@ -95,14 +81,17 @@ BaudRate = 115200</pre>
     </li>
   </ul>
 
-  <h2 class="text-2xl font-bold mt-8">Step 6: Restart the service</h2>
+  <h2 class="text-2xl font-bold mt-8">Step 4: Restart the service and the device (optional)</h2>
   <p class="mt-4">
-    To apply the changes made in the configuration file, you need to restart the
+    If you configured the tracker manually after installation, you need to restart the
     <strong>trek-tracker.service</strong>. You can do this by running the
     following command:
   </p>
   <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">
 sudo systemctl restart trek-tracker.service</pre>
+  <p class="mt-4">
+    If you did not reboot the device after installation, it is recommended to do so for the software to work properly.
+  </p>
 
   <h2 class="text-2xl font-bold mt-8">You are done!</h2>
   <p class="mt-4">
