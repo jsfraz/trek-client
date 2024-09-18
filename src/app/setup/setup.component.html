@@ -8,19 +8,18 @@
 
   <h2 class="text-2xl font-bold mt-8">Step 1: Generate API key in frontend</h2>
   <p class="mt-4">
-    Create new tracker in <a class="underline" href="/trackers">Trackers section</a> and copy the
+    Create new tracker in <a class="underline" (click)="this.router.navigate(['trackers'])">Trackers section</a> and copy the
     generated API key. You will need it in step 4.
   </p>
 
   <h2 class="text-2xl font-bold mt-8">Step 2: Power on/power off button</h2>
-  To enable powering off with the button you <strong>must</strong> add following lone to the end of <code>/boot/config.txt</code> file:
+  To enable powering off with the button you <strong>must</strong> add following line to the end of <code>/boot/config.txt</code> file:
   <p class="mt-4">
-    <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">
-      dtoverlay=gpio-shutdown</pre>
+    <pre class="dark:bg-gray-900 bg-gray-300 p-4 rounded-md mt-2 overflow-x-auto">dtoverlay=gpio-shutdown</pre>
 
   <h2 class="text-2xl font-bold mt-8">Step 3: Download and install DEB package</h2>
   <p class="mt-4">
-    To begin, download the DEB file from
+    Download the DEB file from
     <a href="{{ this.debUrl }}" class="underline">this link</a>
     and transfer it to your Raspberry Pi. Alternatively, you can directly
     download it to your Raspberry Pi using the following command in the terminal:
