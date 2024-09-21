@@ -5,7 +5,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AlertComponent } from '../alert/alert.component';
 import { ModelsTracker } from '../api/models';
 // https://github.com/themesberg/flowbite/issues/120#issuecomment-2187010089
-import DateRangePicker from 'flowbite-datepicker/DateRangePicker';
+import flatpickr from 'flatpickr';
 
 @Component({
   selector: 'app-map',
@@ -15,8 +15,10 @@ import DateRangePicker from 'flowbite-datepicker/DateRangePicker';
 export class MapComponent implements OnInit, AfterViewInit {
   trackers: ModelsTracker[] = [];
   selectedTracker: ModelsTracker | null = null;
+  allData: boolean = false;
+  live: boolean = false;
 
-  constructor(private trackerService: TrackerService, private matDialog: MatDialog) {}
+  constructor(private trackerService: TrackerService, private matDialog: MatDialog) { }
 
   ngOnInit(): void {
     // Brightness mode
@@ -43,11 +45,22 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    const dateRangePickerEl = document.getElementById('date-rangepicker');
-    new DateRangePicker(dateRangePickerEl, {
-        // options
+    flatpickr("#start-datetime", {
+      enableTime: true,
+      dateFormat: "Y-m-d H:i",
+      onChange: (selectedDates) => {
+        console.log("Start Date:", selectedDates);
+      }
     });
-}
+    
+    flatpickr("#end-datetime", {
+      enableTime: true,
+      dateFormat: "Y-m-d H:i",
+      onChange: (selectedDates) => {
+        console.log("End Date:", selectedDates);
+      }
+    });
+  }
 
   // Map options
   options = {
@@ -84,7 +97,11 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.isDarkMode = !this.isDarkMode;
   }
 
-  selectedTrackerChanged(): void {
-    
+  allDataCheckboxChanged(): void {
+    this.allData = !this.allData;
+  }
+
+  liveCheckboxChanged(): void {
+    this.live = !this.live;
   }
 }

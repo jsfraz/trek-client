@@ -1,10 +1,10 @@
 <div class="flex justify-between p-2">
-    <div class="flex justify-between p-2 space-x-4">
+    <div class="flex justify-between p-2 space-x-8">
         <!-- Tracker select -->
         <label class="dark:text-white">
             Tracker:
-            <select [(ngModel)]="this.selectedTracker" (change)="selectedTrackerChanged()"
-                class="py-2 px-4 rounded-lg border-gray-200 bg-white text-black dark:bg-gray-700 dark:border-gray-600 dark:text-white border p-2">
+            <select [(ngModel)]="this.selectedTracker"
+                class="py-2 px-4 rounded-lg text-black dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600 dark:text-white border p-2">
                 <option [ngValue]="null"></option>
                 @for (tracker of trackers; track $index) {
                 <option [ngValue]="tracker">
@@ -13,34 +13,51 @@
                 }
             </select>
         </label>
+
+        <!-- All checkbox -->
+        <label class="dark:text-white py-2" [hidden]="selectedTracker == null">
+            All data
+            <input type="checkbox" (change)="allDataCheckboxChanged()" [checked]="allData"
+                class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
+        </label>
+        <!-- Live checkbox -->
+        <label class="dark:text-white py-2" [hidden]="selectedTracker == null">
+            Live
+            <input type="checkbox" (change)="liveCheckboxChanged()" [checked]="live"
+                class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
+        </label>
+        @if (!allData) {
         <!-- Range datepicker -->
         <div id="date-rangepicker" class="flex items-center">
-            <div class="relative">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                    </svg>
+            <span class="mx-2 text-black dark:text-white" [hidden]="selectedTracker == null">Range from</span>
+            <div class="relative" [hidden]="selectedTracker == null">
+                <!-- Icon -->
+                <div class="absolute mt-2 start-0 flex items-center ps-3 pointer-events-none">
+                    <i class="bi bi-calendar2-range-fill w-4 h-4 text-black dark:text-white"></i>
                 </div>
+                <!-- Input -->
                 <input name="start" type="text"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Select date start">
+                    class="border text-sm rounded-lg block w-full ps-10 p-2.5 text-black dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600 dark:text-white"
+                    placeholder="Select start date and time" id="start-datetime">
             </div>
-            <span class="mx-2 text-gray-500">to</span>
-            <div class="relative">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                    </svg>
+            <span class="mx-2 text-black dark:text-white" [hidden]="selectedTracker == null">to</span>
+            <div class="relative" [hidden]="selectedTracker == null">
+                <!-- Icon -->
+                <div class="absolute mt-2 start-0 flex items-center ps-3 pointer-events-none">
+                    <i class="bi bi-calendar2-range-fill w-4 h-4 text-black dark:text-white"></i>
                 </div>
+                <!-- Input -->
                 <input name="end" type="text"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Select date end">
+                    class="border text-sm rounded-lg block w-full ps-10 p-2.5 text-black dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600 dark:text-white"
+                    placeholder="Select end date and time" id="end-datetime">
             </div>
         </div>
+        }
+        <!-- Show button -->
+        <button type="submit" [hidden]="selectedTracker == null"
+            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">
+            Show
+        </button>
     </div>
     <a (click)="toggleDarkMap()"
         class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-[122px] h-10">
