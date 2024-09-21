@@ -1,9 +1,49 @@
 <div class="flex justify-between p-2">
-    <div>
-        <span class="text-gray-900 dark:text-white">TODO from to and tracker</span>
+    <div class="flex justify-between p-2 space-x-4">
+        <!-- Tracker select -->
+        <label class="dark:text-white">
+            Tracker:
+            <select [(ngModel)]="this.selectedTracker" (change)="selectedTrackerChanged()"
+                class="py-2 px-4 rounded-lg border-gray-200 bg-white text-black dark:bg-gray-700 dark:border-gray-600 dark:text-white border p-2">
+                <option [ngValue]="null"></option>
+                @for (tracker of trackers; track $index) {
+                <option [ngValue]="tracker">
+                    {{tracker.name}}
+                </option>
+                }
+            </select>
+        </label>
+        <!-- Range datepicker -->
+        <div id="date-rangepicker" class="flex items-center">
+            <div class="relative">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                    </svg>
+                </div>
+                <input name="start" type="text"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Select date start">
+            </div>
+            <span class="mx-2 text-gray-500">to</span>
+            <div class="relative">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                    </svg>
+                </div>
+                <input name="end" type="text"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Select date end">
+            </div>
+        </div>
     </div>
     <a (click)="toggleDarkMap()"
-        class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-[122px]">
+        class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-[122px] h-10">
         <i class="bi" [ngClass]="isDarkMode ? 'bi-brightness-high-fill' : 'bi-moon-fill'"></i>
         <span class="flex-1 ml-3 whitespace-nowrap">{{ isDarkMode ? "Light" : "Dark" }} mode</span>
     </a>

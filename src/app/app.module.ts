@@ -8,7 +8,7 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@a
 import { LoginComponent } from './login/login.component';
 import { MapComponent } from './map/map.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './shared/authconfig.interceptor';
 import { UserComponent } from './user/user.component';
 import { CreateUserComponent } from './create-user/create-user.component';
@@ -47,6 +47,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
         ReactiveFormsModule,
         MatTooltipModule,
         LeafletModule,
+        FormsModule
     ],
     providers: [{
         provide: HTTP_INTERCEPTORS,
