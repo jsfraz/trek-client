@@ -6,7 +6,7 @@ export interface ModelsGnssData {
   id: number;
   latitude: number;
   longitude: number;
-  speed?: number;
+  speed: number;
   timestamp: string;
   trackerId: number;
 }

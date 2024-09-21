@@ -2,7 +2,7 @@
 <!-- show when logged -->
 <nav *ngIf="this.authService.isLoggedIn"
   class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-  <div class="px-3 py-3 lg:px-5 lg:pl-3">
+  <div class="px-2 py-2 lg:px-5 lg:pl-3">
     <div class="flex items-center justify-between">
       <div class="flex items-center justify-start">
         <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
@@ -12,8 +12,8 @@
           <i class="text-2xl dark:text-gray-400 text-black bi bi-list"></i>
         </button>
         <a (click)="this.router.navigate([''])" class="cursor-pointer flex ml-2 md:mr-24">
-          <img src="assets/images/logo.svg" alt="Logo" class="text-black dark:text-white w-10 h-10 mr-1 invert dark:invert-0">
-          <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Trek</span>
+          <img src="assets/images/logo.svg" alt="Logo" class="text-black dark:text-white w-8 h-8 mr-1 invert dark:invert-0">
+          <span class="self-center text-lg font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Trek</span>
         </a>
       </div>
       <div class="flex items-center">
@@ -97,7 +97,7 @@
 </aside>
 <!-- show when logged -->
 <div *ngIf="this.authService.isLoggedIn" class="sm:ml-64">
-  <div class="mt-16">
+  <div class="mt-12">
     <router-outlet></router-outlet>
   </div>
 </div>
