@@ -44,6 +44,10 @@ export class MapComponent implements OnInit, AfterViewInit {
   loading: boolean = false;
   // Map polylines
   polylines: Leaflet.Polyline[] = [];
+  // Speed
+  minSpeed: number | null = null
+  avgSpeed: number | null = null
+  maxSpeed: number | null = null
 
   constructor(private trackerService: TrackerService, private gnssDataService: GnssDataService, private matDialog: MatDialog) { }
 
@@ -96,7 +100,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   getMapBrightnessMode(): void {
-    var mode: string = localStorage.getItem('brightness_mode_map') ?? 'dark';
+    var mode: string = localStorage.getItem('brightness_mode_map') ?? 'light';
     if (mode == 'dark') {
       // set dark mode
       this.isDarkMode = true;
@@ -135,6 +139,11 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   showButton(): void {
+    this.loading = true;
+    // Reset speed
+    this.minSpeed = null;
+    this.avgSpeed = null;
+    this.maxSpeed = null;
     // Delete polylines
     this.polylines.forEach(x => {
       x.remove();
@@ -145,7 +154,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.gnssDataService.getAllGnssRecords({ id: this.selectedTracker!.id, offset: this.offset }).subscribe({
         next: (v) => {
           // success
-          this.show(v); 
+          this.show(v);
         },
         error: (e) => {
           // error
@@ -157,6 +166,7 @@ export class MapComponent implements OnInit, AfterViewInit {
         },
         complete: () => {
           // complete
+          this.loading = false;
         }
       });
     } else {
@@ -176,6 +186,7 @@ export class MapComponent implements OnInit, AfterViewInit {
         },
         complete: () => {
           // complete
+          this.loading = false;
         }
       });
     }
@@ -186,6 +197,10 @@ export class MapComponent implements OnInit, AfterViewInit {
     if (gnssSummary == null) {
       return;
     }
+    // Speed
+    this.minSpeed = gnssSummary.minSpeed;
+    this.avgSpeed = gnssSummary.avgSpeed;
+    this.maxSpeed = gnssSummary.maxSpeed;
     // Create polylines from points that connect
     var latlngs: LatLngExpression[] = [];
     for (let i = 0; i < gnssSummary.data.length; i++) {
@@ -207,7 +222,6 @@ export class MapComponent implements OnInit, AfterViewInit {
         this.polylines.push(Leaflet.polyline(latlngs, { color: 'red' }).addTo(this.map));
       }
     }
-    console.info(this.polylines);
     // Show on map
     this.polylines.forEach(x => {
       x.addTo(this.map);
@@ -217,5 +231,10 @@ export class MapComponent implements OnInit, AfterViewInit {
   connects(date1: Date, date2: Date): boolean {
     const difference = date2.getTime() - date1.getTime();
     return difference <= 1250 * this.offset;
+  }
+
+  roundNumber(num: number): string {
+    let roundedString: string = num.toFixed(2);
+    return roundedString.replace('.', ',');
   }
 }

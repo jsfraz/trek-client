@@ -1,82 +1,90 @@
 <div class="flex justify-between p-2">
-    <div class="flex justify-between p-2 space-x-6">
-        <!-- Tracker select -->
-        <label class="dark:text-white">
-            Tracker:
-            <select [(ngModel)]="this.selectedTracker"
-                class="py-2 px-4 rounded-lg text-black dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600 dark:text-white border p-2">
-                <option [ngValue]="null"></option>
-                @for (tracker of trackers; track $index) {
-                <option [ngValue]="tracker">
-                    {{tracker.name}}
-                </option>
-                }
-            </select>
-        </label>
-        <!-- All checkbox -->
-        <label class="dark:text-white py-2" [hidden]="selectedTracker == null">
-            All data
-            <input type="checkbox" (change)="allDataCheckboxChanged()" [checked]="allData"
-                class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
-        </label>
-        <!-- Live checkbox -->
-        <label class="dark:text-white py-2" [hidden]="selectedTracker == null">
-            Live
-            <input type="checkbox" (change)="liveCheckboxChanged()" [checked]="live"
-                class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
-        </label>
-        <!-- Offset -->
-        <label class="dark:text-white" [hidden]="selectedTracker == null">
-            Offset
-            <select [(ngModel)]="this.offset"
-                class="py-2 px-4 rounded-lg text-black dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600 dark:text-white border p-2">
-                <option [ngValue]="1">1 second</option>
-                <option [ngValue]="5">5 seconds</option>
-                <option [ngValue]="10">10 seconds</option>
-                <option [ngValue]="30">30 seconds</option>
-                <option [ngValue]="60">1 minute</option>
-                <option [ngValue]="300">5 minutes</option>
-                <option [ngValue]="600">10 minutes</option>
-                <option [ngValue]="1800">30 minutes</option>
-                <option [ngValue]="3600">1 hour</option>
-            </select>
-        </label>
-        <!-- Range datepicker -->
-        <div id="date-rangepicker" class="flex items-center">
-            <span class="mx-2 text-black dark:text-white" [hidden]="selectedTracker == null">Range from</span>
-            <div class="relative" [hidden]="selectedTracker == null">
-                <!-- Icon -->
-                <div class="absolute mt-2 start-0 flex items-center ps-3 pointer-events-none">
-                    <i class="bi bi-calendar2-range-fill w-4 h-4"
-                        [ngClass]="allData ? 'text-gray-600' : 'text-black dark:text-white'"></i>
+    <div>
+        <div class="flex justify-between p-2 space-x-6">
+            <!-- Tracker select -->
+            <label class="dark:text-white">
+                Tracker:
+                <select [(ngModel)]="this.selectedTracker"
+                    class="py-2 px-4 rounded-lg text-black dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600 dark:text-white border p-2">
+                    <option [ngValue]="null"></option>
+                    @for (tracker of trackers; track $index) {
+                    <option [ngValue]="tracker">
+                        {{tracker.name}}
+                    </option>
+                    }
+                </select>
+            </label>
+            <!-- All checkbox -->
+            <label class="dark:text-white py-2" [hidden]="selectedTracker == null">
+                All data
+                <input type="checkbox" (change)="allDataCheckboxChanged()" [checked]="allData"
+                    class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
+            </label>
+            <!-- Live checkbox -->
+            <label class="dark:text-white py-2" [hidden]="selectedTracker == null">
+                <strong>TODO</strong> Live
+                <input type="checkbox" (change)="liveCheckboxChanged()" [checked]="live"
+                    class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
+            </label>
+            <!-- Offset -->
+            <label class="dark:text-white" [hidden]="selectedTracker == null">
+                Offset
+                <select [(ngModel)]="this.offset"
+                    class="py-2 px-4 rounded-lg text-black dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600 dark:text-white border p-2">
+                    <option [ngValue]="1">1 second</option>
+                    <option [ngValue]="5">5 seconds</option>
+                    <option [ngValue]="10">10 seconds</option>
+                    <option [ngValue]="30">30 seconds</option>
+                    <option [ngValue]="60">1 minute</option>
+                    <option [ngValue]="300">5 minutes</option>
+                    <option [ngValue]="600">10 minutes</option>
+                    <option [ngValue]="1800">30 minutes</option>
+                    <option [ngValue]="3600">1 hour</option>
+                </select>
+            </label>
+            <!-- Range datepicker -->
+            <div id="date-rangepicker" class="flex items-center">
+                <span class="mx-2 text-black dark:text-white" [hidden]="selectedTracker == null">Range from</span>
+                <div class="relative" [hidden]="selectedTracker == null">
+                    <!-- Icon -->
+                    <div class="absolute mt-2 start-0 flex items-center ps-3 pointer-events-none">
+                        <i class="bi bi-calendar2-range-fill w-4 h-4"
+                            [ngClass]="allData ? 'text-gray-600' : 'text-black dark:text-white'"></i>
+                    </div>
+                    <!-- Input -->
+                    <input name="start" type="text" [disabled]="allData"
+                        [ngClass]="allData ? 'text-gray-600' : 'text-black dark:text-white'"
+                        class="border text-sm rounded-lg block w-full ps-10 p-2.5 dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600"
+                        placeholder="Select start date and time" id="start-datetime">
                 </div>
-                <!-- Input -->
-                <input name="start" type="text" [disabled]="allData"
-                    [ngClass]="allData ? 'text-gray-600' : 'text-black dark:text-white'"
-                    class="border text-sm rounded-lg block w-full ps-10 p-2.5 dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600"
-                    placeholder="Select start date and time" id="start-datetime">
-            </div>
-            <span class="mx-2 text-black dark:text-white" [hidden]="selectedTracker == null">to</span>
-            <div class="relative" [hidden]="selectedTracker == null">
-                <!-- Icon -->
-                <div class="absolute mt-2 start-0 flex items-center ps-3 pointer-events-none">
-                    <i class="bi bi-calendar2-range-fill w-4 h-4"
-                        [ngClass]="allData ? 'text-gray-600' : 'text-black dark:text-white'"></i>
+                <span class="mx-2 text-black dark:text-white" [hidden]="selectedTracker == null">to</span>
+                <div class="relative" [hidden]="selectedTracker == null">
+                    <!-- Icon -->
+                    <div class="absolute mt-2 start-0 flex items-center ps-3 pointer-events-none">
+                        <i class="bi bi-calendar2-range-fill w-4 h-4"
+                            [ngClass]="allData ? 'text-gray-600' : 'text-black dark:text-white'"></i>
+                    </div>
+                    <!-- Input -->
+                    <input name="end" type="text" [disabled]="allData"
+                        [ngClass]="allData ? 'text-gray-600' : 'text-black dark:text-white'"
+                        class="border text-sm rounded-lg block w-full ps-10 p-2.5 dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600"
+                        placeholder="Select end date and time" id="end-datetime">
                 </div>
-                <!-- Input -->
-                <input name="end" type="text" [disabled]="allData"
-                    [ngClass]="allData ? 'text-gray-600' : 'text-black dark:text-white'"
-                    class="border text-sm rounded-lg block w-full ps-10 p-2.5 dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600"
-                    placeholder="Select end date and time" id="end-datetime">
             </div>
+            <!-- Show button -->
+            <button type="submit" [hidden]="selectedTracker == null" [disabled]="loading ? true : allData ? false : !isFromToValid()"
+                (click)="showButton()"
+                [ngClass]="loading ? 'bg-blue-300' : allData ? 'bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300' : isFromToValid() ? 'bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300' : 'bg-blue-300'"
+                class="text-white px-4 py-2 rounded-lg cursor-pointer">
+                {{ loading ? 'Loading...' : 'Show' }}
+            </button>
         </div>
-        <!-- Show button -->
-        <button type="submit" [hidden]="selectedTracker == null" [disabled]="allData ? false : isFromToValid()"
-            (click)="showButton()"
-            [ngClass]="allData ? 'bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300' : isFromToValid() ? 'bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300' : 'bg-blue-300'"
-            class="text-white px-4 py-2 rounded-lg cursor-pointer">
-            Show
-        </button>
+        <div class="flex p-2 space-x-6 text-black dark:text-white">
+            <p>Minimum speed: <strong>{{ minSpeed != null ? roundNumber(minSpeed) : '--:--' }} km/h</strong></p>
+            <p>Average speed: <strong>{{ avgSpeed != null ? roundNumber(avgSpeed) : '--:--' }} km/h</strong></p>
+            <p>Maximum speed: <strong>{{ maxSpeed != null ? roundNumber(maxSpeed) : '--:--' }} km/h</strong></p>
+            <p><strong>TODO</strong> Distance: <strong>--:-- km</strong></p>
+        </div>
     </div>
     <a (click)="toggleDarkMap()"
         class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-[122px] h-10 mt-3">
