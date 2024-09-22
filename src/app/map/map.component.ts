@@ -3,10 +3,11 @@ import { latLng, LatLngExpression, tileLayer } from 'leaflet';
 import { GnssDataService, TrackerService } from '../api/services';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AlertComponent } from '../alert/alert.component';
-import { ModelsGnssDataSummary, ModelsTracker } from '../api/models';
+import { ModelsGnssData, ModelsGnssDataSummary, ModelsTracker } from '../api/models';
 // https://github.com/themesberg/flowbite/issues/120#issuecomment-2187010089
 import flatpickr from 'flatpickr';
 import * as Leaflet from 'leaflet';
+import { formatNumber } from '@angular/common';
 
 @Component({
   selector: 'app-map',
@@ -19,7 +20,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   // Map options
   options = {
     layers: [
-      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '' })
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { minZoom: 2, maxZoom: 20, attribution: '' })
     ],
     zoom: 5,
     center: latLng(53.5775, 23.106111)
@@ -42,12 +43,13 @@ export class MapComponent implements OnInit, AfterViewInit {
   offset: number = 1;
   // Loading
   loading: boolean = false;
+  // Data
+  gnssSummary: ModelsGnssDataSummary | null = null;
   // Map polylines
   polylines: Leaflet.Polyline[] = [];
-  // Speed
-  minSpeed: number | null = null
-  avgSpeed: number | null = null
-  maxSpeed: number | null = null
+  // Points
+  markers: Leaflet.CircleMarker[] = [];
+  points: boolean = false;
 
   constructor(private trackerService: TrackerService, private gnssDataService: GnssDataService, private matDialog: MatDialog) { }
 
@@ -78,7 +80,8 @@ export class MapComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     flatpickr("#start-datetime", {
       enableTime: true,
-      dateFormat: "m.d. Y H:i",
+      enableSeconds: true,
+      dateFormat: "m.d. Y H:i:s",
       onChange: (selectedDates) => {
         // console.log("Start Date:", selectedDates);
         this.from = selectedDates[0];
@@ -87,7 +90,8 @@ export class MapComponent implements OnInit, AfterViewInit {
 
     flatpickr("#end-datetime", {
       enableTime: true,
-      dateFormat: "m.d. Y H:i",
+      enableSeconds: true,
+      dateFormat: "m.d. Y H:i:s",
       onChange: (selectedDates) => {
         // console.log("End Date:", selectedDates);
         this.to = selectedDates[0];
@@ -140,10 +144,8 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   showButton(): void {
     this.loading = true;
-    // Reset speed
-    this.minSpeed = null;
-    this.avgSpeed = null;
-    this.maxSpeed = null;
+    // Reset
+    this.gnssSummary = null;
     // Delete polylines
     this.polylines.forEach(x => {
       x.remove();
@@ -154,7 +156,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.gnssDataService.getAllGnssRecords({ id: this.selectedTracker!.id, offset: this.offset }).subscribe({
         next: (v) => {
           // success
-          this.show(v);
+          this.gnssSummary = v;
         },
         error: (e) => {
           // error
@@ -167,6 +169,7 @@ export class MapComponent implements OnInit, AfterViewInit {
         complete: () => {
           // complete
           this.loading = false;
+          this.show();
         }
       });
     } else {
@@ -174,7 +177,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.gnssDataService.getGnssRecordsByTimestamps({ id: this.selectedTracker!.id, offset: this.offset, fromUtc: this.from!.toUTCString(), toUtc: this.to!.toUTCString() }).subscribe({
         next: (v) => {
           // success
-          this.show(v);
+          this.gnssSummary = v;
         },
         error: (e) => {
           // error
@@ -187,30 +190,31 @@ export class MapComponent implements OnInit, AfterViewInit {
         complete: () => {
           // complete
           this.loading = false;
+          this.show();
         }
       });
     }
   }
 
-  show(gnssSummary: ModelsGnssDataSummary | null): void {
+  show(): void {
     // Return if no data is retuned from server
-    if (gnssSummary == null) {
+    if (this.gnssSummary == null) {
       return;
     }
-    // Speed
-    this.minSpeed = gnssSummary.minSpeed;
-    this.avgSpeed = gnssSummary.avgSpeed;
-    this.maxSpeed = gnssSummary.maxSpeed;
     // Create polylines from points that connect
     var latlngs: LatLngExpression[] = [];
-    for (let i = 0; i < gnssSummary.data.length; i++) {
+    for (let i = 0; i < this.gnssSummary.data.length; i++) {
+      // Add marker with description
+      if (this.points) {
+        this.addMarker(this.gnssSummary.data[i]);
+      }
       // Push if the point is first in polyline
       if (latlngs.length == 0) {
-        latlngs.push({ lat: gnssSummary.data[i].latitude, lng: gnssSummary.data[i].longitude });
+        latlngs.push({ lat: this.gnssSummary.data[i].latitude, lng: this.gnssSummary.data[i].longitude });
       } else {
         // Check if connects
-        if (this.connects(new Date(gnssSummary.data[i - 1].timestamp), new Date(gnssSummary.data[i].timestamp))) {
-          latlngs.push({ lat: gnssSummary.data[i].latitude, lng: gnssSummary.data[i].longitude });
+        if (this.connects(new Date(this.gnssSummary.data[i - 1].timestamp), new Date(this.gnssSummary.data[i].timestamp))) {
+          latlngs.push({ lat: this.gnssSummary.data[i].latitude, lng: this.gnssSummary.data[i].longitude });
         } else {
           // Does not connect, end polyline
           this.polylines.push(Leaflet.polyline(latlngs, { color: 'red' }).addTo(this.map));
@@ -218,12 +222,16 @@ export class MapComponent implements OnInit, AfterViewInit {
         }
       }
       // End of the loop
-      if (i == gnssSummary.data.length - 1) {
+      if (i == this.gnssSummary.data.length - 1) {
         this.polylines.push(Leaflet.polyline(latlngs, { color: 'red' }).addTo(this.map));
       }
     }
-    // Show on map
+    // Show polylines on map
     this.polylines.forEach(x => {
+      x.addTo(this.map);
+    });
+    // Show markers on map
+    this.markers.forEach(x => {
       x.addTo(this.map);
     });
   }
@@ -236,5 +244,66 @@ export class MapComponent implements OnInit, AfterViewInit {
   roundNumber(num: number): string {
     let roundedString: string = num.toFixed(2);
     return roundedString.replace('.', ',');
+  }
+
+  clearButton(): void {
+    // Delete polylines
+    this.polylines.forEach(x => {
+      x.remove();
+    });
+    this.polylines = [];
+    // Delete markers
+    this.markers.forEach(x => {
+      x.remove();
+    });
+    this.markers = [];
+  }
+
+  canClear(): boolean {
+    return this.polylines.length != 0 || this.polylines.length != 0;
+  }
+
+  onMarkerMouseOver(event: Leaflet.LeafletEvent, description: string) {
+    Leaflet.tooltip()
+      .setLatLng(event.target.getLatLng())
+      .setContent(description)
+      .openOn(this.map);
+  }
+
+  pointsCheckboxChanged(): void {
+    this.points = !this.points;
+    if (this.points) {
+      // Add markers
+      if (this.gnssSummary != null) {
+        this.gnssSummary.data.forEach(x => {
+          this.addMarker(x);
+        });
+        // Show markers on map
+        this.markers.forEach(x => {
+          x.addTo(this.map);
+        });
+      }
+    } else {
+      // Delete markers
+      this.markers.forEach(x => {
+        x.remove();
+      });
+    }
+  }
+
+  addMarker(data: ModelsGnssData): void {
+    const marker = Leaflet.circleMarker({ lat: data.latitude, lng: data.longitude }, { color: 'blue', radius: 3, fill: true, fillColor: 'blue', fillOpacity: 1 })
+      .on('click', (event) => this.onMarkerMouseOver(event, 'Speed: <strong>' + this.roundNumber(data.speed) + ' km/h</strong><br>' + this.formatDate(new Date(data.timestamp))));
+    this.markers.push(marker);
+  }
+
+  formatDate(date: Date): string {
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+    return `${month}.${day}. ${year} ${hours}:${minutes}:${seconds}`;
   }
 }

@@ -1,6 +1,6 @@
 <div class="flex justify-between p-2">
     <div>
-        <div class="flex justify-between p-2 space-x-6">
+        <div class="flex justify-between pt-2 space-x-6 py-2">
             <!-- Tracker select -->
             <label class="dark:text-white">
                 Tracker:
@@ -18,12 +18,6 @@
             <label class="dark:text-white py-2" [hidden]="selectedTracker == null">
                 All data
                 <input type="checkbox" (change)="allDataCheckboxChanged()" [checked]="allData"
-                    class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
-            </label>
-            <!-- Live checkbox -->
-            <label class="dark:text-white py-2" [hidden]="selectedTracker == null">
-                <strong>TODO</strong> Live
-                <input type="checkbox" (change)="liveCheckboxChanged()" [checked]="live"
                     class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
             </label>
             <!-- Offset -->
@@ -72,18 +66,41 @@
                 </div>
             </div>
             <!-- Show button -->
-            <button type="submit" [hidden]="selectedTracker == null" [disabled]="loading ? true : allData ? false : !isFromToValid()"
-                (click)="showButton()"
+            <button type="submit" [hidden]="selectedTracker == null"
+                [disabled]="loading ? true : allData ? false : !isFromToValid()" (click)="showButton()"
                 [ngClass]="loading ? 'bg-blue-300' : allData ? 'bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300' : isFromToValid() ? 'bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300' : 'bg-blue-300'"
                 class="text-white px-4 py-2 rounded-lg cursor-pointer">
                 {{ loading ? 'Loading...' : 'Show' }}
             </button>
+            <!-- Clear button -->
+            <button type="submit" [hidden]="selectedTracker == null" (click)="clearButton()" [disabled]="!canClear()"
+                [ngClass]="canClear() ? 'bg-red-600 hover:bg-red-800 focus:outline-none focus:ring focus:border-red-300' : 'bg-red-300'"
+                class="text-white px-4 py-2 rounded-lg cursor-pointer">
+                Clear
+            </button>
         </div>
-        <div class="flex p-2 space-x-6 text-black dark:text-white">
-            <p>Minimum speed: <strong>{{ minSpeed != null ? roundNumber(minSpeed) : '--:--' }} km/h</strong></p>
-            <p>Average speed: <strong>{{ avgSpeed != null ? roundNumber(avgSpeed) : '--:--' }} km/h</strong></p>
-            <p>Maximum speed: <strong>{{ maxSpeed != null ? roundNumber(maxSpeed) : '--:--' }} km/h</strong></p>
-            <p><strong>TODO</strong> Distance: <strong>--:-- km</strong></p>
+        <div class="flex py-2 space-x-6 text-black dark:text-white">
+            <!-- Summary -->
+            <p [hidden]="selectedTracker == null">Minimum speed: <strong>{{ gnssSummary != null ? roundNumber(gnssSummary.minSpeed) :
+                    '--:--' }} km/h</strong></p>
+            <p [hidden]="selectedTracker == null">Average speed: <strong>{{ gnssSummary != null ? roundNumber(gnssSummary.avgSpeed) :
+                    '--:--' }} km/h</strong></p>
+            <p [hidden]="selectedTracker == null">Maximum speed: <strong>{{ gnssSummary != null ? roundNumber(gnssSummary.maxSpeed) :
+                    '--:--' }} km/h</strong></p>
+            <p [hidden]="selectedTracker == null"><strong>TODO</strong> Distance: <strong>--:-- km</strong></p>
+            <!-- Points -->
+            <label class="dark:text-white" [hidden]="selectedTracker == null">
+                Points
+                <input type="checkbox" (change)="pointsCheckboxChanged()" [checked]="points"
+                    class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
+            </label>
+            <!-- Live checkbox -->
+            <label class="dark:text-white" [hidden]="selectedTracker == null">
+                <strong>TODO</strong> Live
+                <input type="checkbox" (change)="liveCheckboxChanged()" [checked]="live"
+                    class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
+            </label>
+            <div class="h-6"></div>
         </div>
     </div>
     <a (click)="toggleDarkMap()"
