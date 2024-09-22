@@ -7,7 +7,6 @@ import { ModelsGnssData, ModelsGnssDataSummary, ModelsTracker } from '../api/mod
 // https://github.com/themesberg/flowbite/issues/120#issuecomment-2187010089
 import flatpickr from 'flatpickr';
 import * as Leaflet from 'leaflet';
-import { formatNumber } from '@angular/common';
 
 @Component({
   selector: 'app-map',
@@ -81,7 +80,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     flatpickr("#start-datetime", {
       enableTime: true,
       enableSeconds: true,
-      dateFormat: "m.d. Y H:i:s",
+      dateFormat: "d.m. Y H:i:s",
       onChange: (selectedDates) => {
         // console.log("Start Date:", selectedDates);
         this.from = selectedDates[0];
@@ -91,7 +90,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     flatpickr("#end-datetime", {
       enableTime: true,
       enableSeconds: true,
-      dateFormat: "m.d. Y H:i:s",
+      dateFormat: "d.m. Y H:i:s",
       onChange: (selectedDates) => {
         // console.log("End Date:", selectedDates);
         this.to = selectedDates[0];
@@ -144,13 +143,8 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   showButton(): void {
     this.loading = true;
-    // Reset
-    this.gnssSummary = null;
-    // Delete polylines
-    this.polylines.forEach(x => {
-      x.remove();
-    });
-    this.polylines = [];
+    // Clear map
+    this.clearButton();
     // Load all data
     if (this.allData) {
       this.gnssDataService.getAllGnssRecords({ id: this.selectedTracker!.id, offset: this.offset }).subscribe({
@@ -247,6 +241,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   clearButton(): void {
+    this.gnssSummary = null;
     // Delete polylines
     this.polylines.forEach(x => {
       x.remove();
@@ -304,6 +299,28 @@ export class MapComponent implements OnInit, AfterViewInit {
     const hours = date.getHours();
     const minutes = date.getMinutes().toString().padStart(2, '0');
     const seconds = date.getSeconds().toString().padStart(2, '0');
-    return `${month}.${day}. ${year} ${hours}:${minutes}:${seconds}`;
+    return `${day}.${month}. ${year} ${hours}:${minutes}:${seconds}`;
+  }
+
+  trackerSelectChanged(): void {
+    if (this.selectedTracker == null) {
+      this.allData = false;
+      this.live = false;
+      /*
+      this.from = null;
+      this.to = null;
+      */
+      this.offset = 1;
+      this.gnssSummary = null;
+      this.polylines.forEach(x => {
+        x.remove();
+      });
+      this.polylines = [];
+      this.markers.forEach(x => {
+        x.remove();
+      });
+      this.markers = [];
+      this.points = false;
+    }
   }
 }
