@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
       }
     }
 
-    if (this.authService.isLoggedIn) {
+    if (this.authService.isTokenValid()) {
       this.userService.whoAmI().subscribe({
         next: (v) => {
           // success
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
         error: (e) => {
           // error
           console.error(e);
-          this.authService.doLogout()
+          this.authService.logout();
         },
         complete: () => {
           // complete
@@ -84,14 +84,5 @@ export class AppComponent implements OnInit {
       this.renderer.setStyle(this.document.documentElement, 'background-color', '#1f2937');
     }
     this.isDarkMode = !this.isDarkMode;
-  }
-
-  // return admin or user
-  getUserType(): string {
-    if (this.authService.currentUser.superuser) {
-      return 'Administrator';
-    } else {
-      return 'Guest user';
-    }
   }
 }

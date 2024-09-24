@@ -1,15 +1,129 @@
 <div class="flex justify-between p-2">
     <div>
-        <span class="text-gray-900 dark:text-white">TODO from to and tracker</span>
+        <div class="flex justify-between pt-2 space-x-6 py-2">
+            <!-- Tracker select -->
+            <label class="dark:text-white">
+                Tracker:
+                <select [(ngModel)]="this.selectedTracker" (change)="trackerSelectChanged()" [disabled]="this.loading"
+                    class="py-2 px-4 rounded-lg text-black dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600 dark:text-white border p-2">
+                    <option [ngValue]="null"></option>
+                    @for (tracker of trackers; track $index) {
+                    <option [ngValue]="tracker">
+                        {{tracker.name}}
+                    </option>
+                    }
+                </select>
+            </label>
+            <!-- All checkbox -->
+            <label class="dark:text-white py-2" [hidden]="selectedTracker == null">
+                All data
+                <input type="checkbox" (change)="allDataCheckboxChanged()" [checked]="allData"
+                    matTooltip="Show all location data of the tracker"
+                    class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
+            </label>
+            <!-- Offset -->
+            <label class="dark:text-white" [hidden]="selectedTracker == null">
+                Offset
+                <select [(ngModel)]="this.offset" matTooltip="Select offset between location data"
+                    class="py-2 px-4 rounded-lg text-black dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600 dark:text-white border p-2">
+                    <option [ngValue]="1">1 second</option>
+                    <option [ngValue]="5">5 seconds</option>
+                    <option [ngValue]="10">10 seconds</option>
+                    <option [ngValue]="30">30 seconds</option>
+                    <option [ngValue]="60">1 minute</option>
+                    <option [ngValue]="300">5 minutes</option>
+                    <option [ngValue]="600">10 minutes</option>
+                    <option [ngValue]="1800">30 minutes</option>
+                    <option [ngValue]="3600">1 hour</option>
+                </select>
+            </label>
+            <!-- Range datepicker -->
+            <div id="date-rangepicker" class="flex items-center">
+                <span class="mx-2 text-black dark:text-white" [hidden]="selectedTracker == null">Range from</span>
+                <div class="relative" [hidden]="selectedTracker == null">
+                    <!-- Icon -->
+                    <div class="absolute mt-2 start-0 flex items-center ps-3 pointer-events-none">
+                        <i class="bi bi-calendar2-range-fill w-4 h-4"
+                            [ngClass]="allData ? 'text-gray-600' : 'text-black dark:text-white'"></i>
+                    </div>
+                    <!-- Input -->
+                    <input name="start" type="text" [disabled]="allData" matTooltip="Select start date"
+                        [ngClass]="allData ? 'text-gray-600' : 'text-black dark:text-white'"
+                        class="border text-sm rounded-lg block w-full ps-10 p-2.5 dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600"
+                        placeholder="Select start date and time" id="start-datetime">
+                </div>
+                <span class="mx-2 text-black dark:text-white" [hidden]="selectedTracker == null">to</span>
+                <div class="relative" [hidden]="selectedTracker == null">
+                    <!-- Icon -->
+                    <div class="absolute mt-2 start-0 flex items-center ps-3 pointer-events-none">
+                        <i class="bi bi-calendar2-range-fill w-4 h-4"
+                            [ngClass]="allData ? 'text-gray-600' : 'text-black dark:text-white'"></i>
+                    </div>
+                    <!-- Input -->
+                    <input name="end" type="text" [disabled]="allData" matTooltip="Select end date"
+                        [ngClass]="allData ? 'text-gray-600' : 'text-black dark:text-white'"
+                        class="border text-sm rounded-lg block w-full ps-10 p-2.5 dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600"
+                        placeholder="Select end date and time" id="end-datetime">
+                </div>
+            </div>
+            <!-- Show button -->
+            <button type="submit" [hidden]="selectedTracker == null" matTooltip="Show location data"
+                [disabled]="loading ? true : allData ? false : !isFromToValid()" (click)="showButton()"
+                [ngClass]="loading ? 'bg-blue-300' : allData ? 'bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300' : isFromToValid() ? 'bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300' : 'bg-blue-300'"
+                class="text-white px-4 py-2 rounded-lg cursor-pointer">
+                {{ loading ? 'Loading...' : 'Show' }}
+            </button>
+            <!-- Clear button -->
+            <button type="submit" [hidden]="selectedTracker == null" (click)="clearButton()" [disabled]="!canClear()"
+                matTooltip="Clear location data from the map"
+                [ngClass]="canClear() ? 'bg-red-600 hover:bg-red-800 focus:outline-none focus:ring focus:border-red-300' : 'bg-red-300'"
+                class="text-white px-4 py-2 rounded-lg cursor-pointer">
+                Clear
+            </button>
+        </div>
+        <div class="flex py-2 space-x-6 text-black dark:text-white">
+            <!-- Summary -->
+            <p [hidden]="selectedTracker == null">Minimum speed: <strong>{{ gnssSummary != null ?
+                    roundNumber(gnssSummary.minSpeed) :
+                    '--:--' }} km/h</strong></p>
+            <p [hidden]="selectedTracker == null">Average speed: <strong>{{ gnssSummary != null ?
+                    roundNumber(gnssSummary.avgSpeed) :
+                    '--:--' }} km/h</strong></p>
+            <p [hidden]="selectedTracker == null">Maximum speed: <strong>{{ gnssSummary != null ?
+                    roundNumber(gnssSummary.maxSpeed) :
+                    '--:--' }} km/h</strong></p>
+            <p [hidden]="selectedTracker == null">Distance: <strong>{{ gnssSummary != null ?
+                    roundNumber(gnssSummary.distance) :
+                    '--:--' }} km</strong></p>
+            <p [hidden]="selectedTracker == null">Live speed: <strong>{{ currentData != null ?
+                    roundNumber(currentData!.speed) :
+                    '--:--' }} km/h</strong></p>
+            <!-- Points -->
+            <label class="dark:text-white" [hidden]="selectedTracker == null">
+                Points
+                <input type="checkbox" (change)="pointsCheckboxChanged()" [checked]="points"
+                    matTooltip="Show every location and it's data"
+                    class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
+            </label>
+            <!-- Live checkbox -->
+            <label class="dark:text-white" [hidden]="selectedTracker == null">
+                Live
+                <input type="checkbox" (change)="liveCheckboxChanged()" [checked]="live"
+                    matTooltip="Show live position of the tracker"
+                    class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
+            </label>
+            <div class="h-6"></div>
+        </div>
     </div>
     <a (click)="toggleDarkMap()"
-        class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-[122px]">
+        class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-[122px] h-10 mt-3">
         <i class="bi" [ngClass]="isDarkMode ? 'bi-brightness-high-fill' : 'bi-moon-fill'"></i>
         <span class="flex-1 ml-3 whitespace-nowrap">{{ isDarkMode ? "Light" : "Dark" }} mode</span>
     </a>
 </div>
-<!-- TODO FIX height -->
-<div class="max-h-screen h-screen">
-    <div leaflet [leafletOptions]="options" style="height: 100%; width: 100%;" class="z-10"
-        [ngClass]="isDarkMode ? 'dark-map' : ''"></div>
+<!-- Map -->
+<!-- TODO fix width, height -->
+<div class="map-container">
+    <div leaflet [leafletOptions]="options" (leafletMapReady)="onMapReady($event)" style="height: 100%; width: 100%;"
+        class="z-10" [ngClass]="isDarkMode ? 'dark-map' : ''"></div>
 </div>

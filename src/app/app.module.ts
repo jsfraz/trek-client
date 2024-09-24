@@ -8,7 +8,7 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@a
 import { LoginComponent } from './login/login.component';
 import { MapComponent } from './map/map.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './shared/authconfig.interceptor';
 import { UserComponent } from './user/user.component';
 import { CreateUserComponent } from './create-user/create-user.component';
@@ -22,6 +22,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ApiModule } from './api/api.module';
 import { environment } from 'src/environments/environment';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 
 @NgModule({
     declarations: [
@@ -47,12 +48,14 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
         ReactiveFormsModule,
         MatTooltipModule,
         LeafletModule,
+        FormsModule
     ],
     providers: [{
         provide: HTTP_INTERCEPTORS,
         useClass: AuthInterceptor,
         multi: true,
-    }, provideHttpClient(withInterceptorsFromDi())],
+    }, provideHttpClient(withInterceptorsFromDi()), { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+        JwtHelperService,],
     bootstrap: [AppComponent],
 })
 

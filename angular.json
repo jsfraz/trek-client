@@ -31,9 +31,13 @@
               "node_modules/tailwindcss/components.css",
               "node_modules/tailwindcss/utilities.css",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
-              "node_modules/leaflet/dist/leaflet.css"
+              "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/flatpickr/dist/flatpickr.min.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/flowbite-datepicker/dist/js/datepicker-full.min.js",
+              "node_modules/socket.io-client/dist/socket.io.js"
+            ],
             "browser": "src/main.ts"
           },
           "configurations": {
@@ -42,7 +46,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
