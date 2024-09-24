@@ -17,7 +17,7 @@ body {
     display: block !important;
 }
 
-/* Dialog border radius:  */
+/* Dialog border radius: https://stackoverflow.com/a/77908592/19371130 */
 .mat-mdc-dialog-container {
     --mdc-dialog-container-shape: 0.75rem;
-  }
+}

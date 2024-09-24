@@ -111,8 +111,8 @@
         <span class="flex-1 ml-3 whitespace-nowrap">{{ isDarkMode ? "Light" : "Dark" }} mode</span>
     </a>
 </div>
-<!-- TODO FIX height -->
-<div class="max-h-screen h-screen">
+<!-- Map -->
+<div class="map-container">
     <div leaflet [leafletOptions]="options" (leafletMapReady)="onMapReady($event)" style="height: 100%; width: 100%;"
         class="z-10" [ngClass]="isDarkMode ? 'dark-map' : ''"></div>
 </div>
