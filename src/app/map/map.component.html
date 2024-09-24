@@ -88,6 +88,8 @@
             <p [hidden]="selectedTracker == null">Maximum speed: <strong>{{ gnssSummary != null ? roundNumber(gnssSummary.maxSpeed) :
                     '--:--' }} km/h</strong></p>
             <p [hidden]="selectedTracker == null"><strong>TODO</strong> Distance: <strong>--:-- km</strong></p>
+            <p [hidden]="selectedTracker == null">Live speed: <strong>{{ currentData != null ? roundNumber(currentData!.speed) :
+                    '--:--' }} km/h</strong></p>
             <!-- Points -->
             <label class="dark:text-white" [hidden]="selectedTracker == null">
                 Points
@@ -96,7 +98,7 @@
             </label>
             <!-- Live checkbox -->
             <label class="dark:text-white" [hidden]="selectedTracker == null">
-                <strong>TODO</strong> Live
+                Live
                 <input type="checkbox" (change)="liveCheckboxChanged()" [checked]="live"
                     class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
             </label>

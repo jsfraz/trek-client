@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { latLng, LatLngExpression, tileLayer } from 'leaflet';
 import { GnssDataService, TrackerService } from '../api/services';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -7,13 +7,15 @@ import { ModelsGnssData, ModelsGnssDataSummary, ModelsTracker } from '../api/mod
 // https://github.com/themesberg/flowbite/issues/120#issuecomment-2187010089
 import flatpickr from 'flatpickr';
 import * as Leaflet from 'leaflet';
+import { AuthService } from '../shared/auth.service';
+import { SocketService } from '../shared/socket.service';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit, AfterViewInit {
+export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   // Map
   map!: Leaflet.Map;
   // Map options
@@ -49,8 +51,13 @@ export class MapComponent implements OnInit, AfterViewInit {
   // Points
   markers: Leaflet.CircleMarker[] = [];
   points: boolean = false;
+  // Current point
+  eventName: string = 'getCurrent';
+  currentData: ModelsGnssData | null = null;
+  currentPoint: Leaflet.CircleMarker | null = null;
+  intervalId: any;
 
-  constructor(private trackerService: TrackerService, private gnssDataService: GnssDataService, private matDialog: MatDialog) { }
+  constructor(private trackerService: TrackerService, private gnssDataService: GnssDataService, private matDialog: MatDialog, public authService: AuthService, private socketService: SocketService) { }
 
   ngOnInit(): void {
     // Brightness mode
@@ -74,6 +81,12 @@ export class MapComponent implements OnInit, AfterViewInit {
         // complete
       }
     });
+    // SocketIO handler
+    this.socketService.on(this.eventName).subscribe((data) => {
+      if (data != null) {
+        this.showCurrent(data);
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -82,7 +95,6 @@ export class MapComponent implements OnInit, AfterViewInit {
       enableSeconds: true,
       dateFormat: "d.m. Y H:i:s",
       onChange: (selectedDates) => {
-        // console.log("Start Date:", selectedDates);
         this.from = selectedDates[0];
       }
     });
@@ -92,10 +104,16 @@ export class MapComponent implements OnInit, AfterViewInit {
       enableSeconds: true,
       dateFormat: "d.m. Y H:i:s",
       onChange: (selectedDates) => {
-        // console.log("End Date:", selectedDates);
         this.to = selectedDates[0];
       }
     });
+  }
+
+  ngOnDestroy() {
+    if (this.socketService.connected()) {
+      clearInterval(this.intervalId);
+      this.socketService.disconnect();
+    }
   }
 
   onMapReady(map: Leaflet.Map) {
@@ -132,6 +150,24 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   liveCheckboxChanged(): void {
     this.live = !this.live;
+    // Connect
+    if (this.live && !this.socketService.connected()) {
+      this.socketService.connect();
+      this.socketService.emit(this.eventName, { id: this.selectedTracker!.id });
+      // Send request every second
+      this.intervalId = setInterval(() => {
+        this.socketService.emit(this.eventName, { id: this.selectedTracker!.id });
+      }, 1000);
+    }
+    // Disconnect
+    if (!this.live && this.socketService.connected()) {
+      this.currentData = null;
+      if (this.currentPoint != null) {
+        this.currentPoint!.remove()
+      }
+      clearInterval(this.intervalId);
+      this.socketService.disconnect();
+    }
   }
 
   isFromToValid(): boolean {
@@ -287,7 +323,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   addMarker(data: ModelsGnssData): void {
-    const marker = Leaflet.circleMarker({ lat: data.latitude, lng: data.longitude }, { color: 'blue', radius: 3, fill: true, fillColor: 'blue', fillOpacity: 1 })
+    const marker = Leaflet.circleMarker({ lat: data.latitude, lng: data.longitude }, { color: 'blue', radius: 2.5, fill: true, fillColor: 'blue', fillOpacity: 1 })
       .on('click', (event) => this.onMarkerMouseOver(event, 'Speed: <strong>' + this.roundNumber(data.speed) + ' km/h</strong><br>' + this.formatDate(new Date(data.timestamp))));
     this.markers.push(marker);
   }
@@ -303,24 +339,43 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   trackerSelectChanged(): void {
-    if (this.selectedTracker == null) {
-      this.allData = false;
-      this.live = false;
-      /*
-      this.from = null;
-      this.to = null;
-      */
-      this.offset = 1;
-      this.gnssSummary = null;
-      this.polylines.forEach(x => {
-        x.remove();
-      });
-      this.polylines = [];
-      this.markers.forEach(x => {
-        x.remove();
-      });
-      this.markers = [];
-      this.points = false;
+    if (this.socketService.connected()) {
+      clearInterval(this.intervalId);
+      this.socketService.disconnect();
     }
+    this.currentData = null;
+    if (this.currentPoint != null) {
+      this.currentPoint!.remove()
+    }
+    this.currentPoint = null;
+    this.allData = false;
+    this.live = false;
+    /*
+    this.from = null;
+    this.to = null;
+    */
+    this.offset = 1;
+    this.gnssSummary = null;
+    this.polylines.forEach(x => {
+      x.remove();
+    });
+    this.polylines = [];
+    this.markers.forEach(x => {
+      x.remove();
+    });
+    this.markers = [];
+    this.points = false;
+  }
+
+  showCurrent(data: ModelsGnssData): void {
+    // Delete old
+    if (this.currentPoint != null) {
+      this.currentPoint.remove();
+      this.currentPoint = null;
+    }
+    // Show new
+    this.currentData = data;
+    this.currentPoint = Leaflet.circleMarker({ lat: this.currentData.latitude, lng: this.currentData.longitude }, { color: 'red', radius: 7.5, fill: true, fillColor: 'red', fillOpacity: 1 });
+    this.currentPoint.addTo(this.map);
   }
 }

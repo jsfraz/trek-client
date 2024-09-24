@@ -35,7 +35,8 @@
               "node_modules/flatpickr/dist/flatpickr.min.css"
             ],
             "scripts": [
-              "node_modules/flowbite-datepicker/dist/js/datepicker-full.min.js"
+              "node_modules/flowbite-datepicker/dist/js/datepicker-full.min.js",
+              "node_modules/socket.io-client/dist/socket.io.js"
             ],
             "browser": "src/main.ts"
           },
