@@ -6,7 +6,7 @@ import { ModelsGnssData } from '../models/models-gnss-data';
 export interface ModelsGnssDataSummary {
   avgSpeed: number;
   data: Array<ModelsGnssData>;
+  distance: number;
   maxSpeed: number;
   minSpeed: number;
-  trackerId: number;
 }

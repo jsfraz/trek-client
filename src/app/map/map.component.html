@@ -17,7 +17,8 @@
             <!-- All checkbox -->
             <label class="dark:text-white py-2" [hidden]="selectedTracker == null">
                 All data
-                <input type="checkbox" (change)="allDataCheckboxChanged()" [checked]="allData" matTooltip="Show all location data of the tracker"
+                <input type="checkbox" (change)="allDataCheckboxChanged()" [checked]="allData"
+                    matTooltip="Show all location data of the tracker"
                     class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
             </label>
             <!-- Offset -->
@@ -73,7 +74,8 @@
                 {{ loading ? 'Loading...' : 'Show' }}
             </button>
             <!-- Clear button -->
-            <button type="submit" [hidden]="selectedTracker == null" (click)="clearButton()" [disabled]="!canClear()" matTooltip="Clear location data from the map"
+            <button type="submit" [hidden]="selectedTracker == null" (click)="clearButton()" [disabled]="!canClear()"
+                matTooltip="Clear location data from the map"
                 [ngClass]="canClear() ? 'bg-red-600 hover:bg-red-800 focus:outline-none focus:ring focus:border-red-300' : 'bg-red-300'"
                 class="text-white px-4 py-2 rounded-lg cursor-pointer">
                 Clear
@@ -81,25 +83,33 @@
         </div>
         <div class="flex py-2 space-x-6 text-black dark:text-white">
             <!-- Summary -->
-            <p [hidden]="selectedTracker == null">Minimum speed: <strong>{{ gnssSummary != null ? roundNumber(gnssSummary.minSpeed) :
+            <p [hidden]="selectedTracker == null">Minimum speed: <strong>{{ gnssSummary != null ?
+                    roundNumber(gnssSummary.minSpeed) :
                     '--:--' }} km/h</strong></p>
-            <p [hidden]="selectedTracker == null">Average speed: <strong>{{ gnssSummary != null ? roundNumber(gnssSummary.avgSpeed) :
+            <p [hidden]="selectedTracker == null">Average speed: <strong>{{ gnssSummary != null ?
+                    roundNumber(gnssSummary.avgSpeed) :
                     '--:--' }} km/h</strong></p>
-            <p [hidden]="selectedTracker == null">Maximum speed: <strong>{{ gnssSummary != null ? roundNumber(gnssSummary.maxSpeed) :
+            <p [hidden]="selectedTracker == null">Maximum speed: <strong>{{ gnssSummary != null ?
+                    roundNumber(gnssSummary.maxSpeed) :
                     '--:--' }} km/h</strong></p>
-            <p [hidden]="selectedTracker == null"><strong>TODO</strong> Distance: <strong>--:-- km</strong></p>
-            <p [hidden]="selectedTracker == null">Live speed: <strong>{{ currentData != null ? roundNumber(currentData!.speed) :
+            <p [hidden]="selectedTracker == null">Distance: <strong>{{ gnssSummary != null ?
+                    roundNumber(gnssSummary.distance) :
+                    '--:--' }} km</strong></p>
+            <p [hidden]="selectedTracker == null">Live speed: <strong>{{ currentData != null ?
+                    roundNumber(currentData!.speed) :
                     '--:--' }} km/h</strong></p>
             <!-- Points -->
             <label class="dark:text-white" [hidden]="selectedTracker == null">
                 Points
-                <input type="checkbox" (change)="pointsCheckboxChanged()" [checked]="points" matTooltip="Show every location and it's data"
+                <input type="checkbox" (change)="pointsCheckboxChanged()" [checked]="points"
+                    matTooltip="Show every location and it's data"
                     class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
             </label>
             <!-- Live checkbox -->
             <label class="dark:text-white" [hidden]="selectedTracker == null">
                 Live
-                <input type="checkbox" (change)="liveCheckboxChanged()" [checked]="live" matTooltip="Show live position of the tracker"
+                <input type="checkbox" (change)="liveCheckboxChanged()" [checked]="live"
+                    matTooltip="Show live position of the tracker"
                     class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
             </label>
             <div class="h-6"></div>
@@ -112,6 +122,7 @@
     </a>
 </div>
 <!-- Map -->
+<!-- TODO fix width, height -->
 <div class="map-container">
     <div leaflet [leafletOptions]="options" (leafletMapReady)="onMapReady($event)" style="height: 100%; width: 100%;"
         class="z-10" [ngClass]="isDarkMode ? 'dark-map' : ''"></div>
