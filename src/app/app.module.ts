@@ -22,6 +22,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ApiModule } from './api/api.module';
 import { environment } from 'src/environments/environment';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 
 @NgModule({
     declarations: [
@@ -53,7 +54,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
         provide: HTTP_INTERCEPTORS,
         useClass: AuthInterceptor,
         multi: true,
-    }, provideHttpClient(withInterceptorsFromDi())],
+    }, provideHttpClient(withInterceptorsFromDi()), { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+        JwtHelperService,],
     bootstrap: [AppComponent],
 })
 

@@ -16,3 +16,8 @@ body {
 .mat-mdc-dialog-component-host {
     display: block !important;
 }
+
+/* Dialog border radius:  */
+.mat-mdc-dialog-container {
+    --mdc-dialog-container-shape: 0.75rem;
+  }

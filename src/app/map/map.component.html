@@ -17,13 +17,13 @@
             <!-- All checkbox -->
             <label class="dark:text-white py-2" [hidden]="selectedTracker == null">
                 All data
-                <input type="checkbox" (change)="allDataCheckboxChanged()" [checked]="allData"
+                <input type="checkbox" (change)="allDataCheckboxChanged()" [checked]="allData" matTooltip="Show all location data of the tracker"
                     class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
             </label>
             <!-- Offset -->
             <label class="dark:text-white" [hidden]="selectedTracker == null">
                 Offset
-                <select [(ngModel)]="this.offset"
+                <select [(ngModel)]="this.offset" matTooltip="Select offset between location data"
                     class="py-2 px-4 rounded-lg text-black dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600 dark:text-white border p-2">
                     <option [ngValue]="1">1 second</option>
                     <option [ngValue]="5">5 seconds</option>
@@ -46,7 +46,7 @@
                             [ngClass]="allData ? 'text-gray-600' : 'text-black dark:text-white'"></i>
                     </div>
                     <!-- Input -->
-                    <input name="start" type="text" [disabled]="allData"
+                    <input name="start" type="text" [disabled]="allData" matTooltip="Select start date"
                         [ngClass]="allData ? 'text-gray-600' : 'text-black dark:text-white'"
                         class="border text-sm rounded-lg block w-full ps-10 p-2.5 dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600"
                         placeholder="Select start date and time" id="start-datetime">
@@ -59,21 +59,21 @@
                             [ngClass]="allData ? 'text-gray-600' : 'text-black dark:text-white'"></i>
                     </div>
                     <!-- Input -->
-                    <input name="end" type="text" [disabled]="allData"
+                    <input name="end" type="text" [disabled]="allData" matTooltip="Select end date"
                         [ngClass]="allData ? 'text-gray-600' : 'text-black dark:text-white'"
                         class="border text-sm rounded-lg block w-full ps-10 p-2.5 dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600"
                         placeholder="Select end date and time" id="end-datetime">
                 </div>
             </div>
             <!-- Show button -->
-            <button type="submit" [hidden]="selectedTracker == null"
+            <button type="submit" [hidden]="selectedTracker == null" matTooltip="Show location data"
                 [disabled]="loading ? true : allData ? false : !isFromToValid()" (click)="showButton()"
                 [ngClass]="loading ? 'bg-blue-300' : allData ? 'bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300' : isFromToValid() ? 'bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300' : 'bg-blue-300'"
                 class="text-white px-4 py-2 rounded-lg cursor-pointer">
                 {{ loading ? 'Loading...' : 'Show' }}
             </button>
             <!-- Clear button -->
-            <button type="submit" [hidden]="selectedTracker == null" (click)="clearButton()" [disabled]="!canClear()"
+            <button type="submit" [hidden]="selectedTracker == null" (click)="clearButton()" [disabled]="!canClear()" matTooltip="Clear location data from the map"
                 [ngClass]="canClear() ? 'bg-red-600 hover:bg-red-800 focus:outline-none focus:ring focus:border-red-300' : 'bg-red-300'"
                 class="text-white px-4 py-2 rounded-lg cursor-pointer">
                 Clear
@@ -93,13 +93,13 @@
             <!-- Points -->
             <label class="dark:text-white" [hidden]="selectedTracker == null">
                 Points
-                <input type="checkbox" (change)="pointsCheckboxChanged()" [checked]="points"
+                <input type="checkbox" (change)="pointsCheckboxChanged()" [checked]="points" matTooltip="Show every location and it's data"
                     class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
             </label>
             <!-- Live checkbox -->
             <label class="dark:text-white" [hidden]="selectedTracker == null">
                 Live
-                <input type="checkbox" (change)="liveCheckboxChanged()" [checked]="live"
+                <input type="checkbox" (change)="liveCheckboxChanged()" [checked]="live" matTooltip="Show live position of the tracker"
                     class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
             </label>
             <div class="h-6"></div>

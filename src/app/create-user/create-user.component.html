@@ -1,15 +1,14 @@
-<!-- TODO dark mode -->
-<div class="max-w-md mx-auto bg-white p-8">
+<div class="dark:bg-gray-800 bg-white dark:text-white text-black p-8">
   <form [formGroup]="createForm" (ngSubmit)="createUser()">
     <div class="mb-4">
-      <label for="username" class="block text-gray-700 font-semibold mb-2">Username</label>
+      <label for="username" class="block font-semibold mb-2">Username</label>
       <input type="text" formControlName="username" name="username"
-        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring text-black dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600 dark:text-white">
     </div>
     <div class="mb-4">
-      <label for="password" class="block text-gray-700 font-semibold mb-2">Password</label>
+      <label for="password" class="block font-semibold mb-2">Password</label>
       <input type="password" formControlName="password" name="password"
-        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring text-black dark:bg-gray-700 border-gray-200 bg-white dark:border-gray-600 dark:text-white">
     </div>
     <div class="flex justify-center space-x-4">
       <button type="submit"

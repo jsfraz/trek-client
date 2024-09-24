@@ -1,6 +1,6 @@
 <div class="container mx-auto my-2 p-6">
     <div class="flex justify-end mb-3">
-        <button class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded mb-2"
+        <button class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg mb-2" matTooltip="Create tracker"
             (click)="openNewTrackerDialog()">
             New
         </button>
@@ -19,15 +19,15 @@
                     <td class="py-2 px-4 text-center">{{ tracker.name }}</td>
                     <td class="py-3 px-4 text-center">
                         <div class="flex items-center justify-end">
-                            <button class="p-2 rounded dark:hover:bg-gray-400 hover:bg-gray-200 mr-1"
+                            <button class="p-2 rounded-lg dark:hover:bg-gray-400 hover:bg-gray-200 mr-1"
                                 matTooltip="Edit tracker" (click)="openEditNameDialog(tracker.id)">
                                 <i class="bi bi-pencil-fill text-black dark:text-white"></i>
                             </button>
-                            <button class="p-2 rounded dark:hover:bg-gray-400 hover:bg-gray-200 mr-1"
+                            <button class="p-2 rounded-lg dark:hover:bg-gray-400 hover:bg-gray-200 mr-1"
                                 matTooltip="Regenerate API key" (click)="regenerateToken(tracker.id)">
                                 <i class="bi bi-key-fill text-black dark:text-white"></i>
                             </button>
-                            <button class="p-2 rounded dark:hover:bg-red-400 hover:bg-red-300"
+                            <button class="p-2 rounded-lg dark:hover:bg-red-400 hover:bg-red-300"
                                 matTooltip="Delete tracker" (click)="deleteTracker(tracker.id)">
                                 <i class="bi bi-trash-fill text-red-700"></i>
                             </button>

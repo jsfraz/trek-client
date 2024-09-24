@@ -13,7 +13,7 @@ export class AuthGuard  {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.authService.isLoggedIn !== true) {
+    if (this.authService.isTokenValid() !== true) {
       window.alert('User is not logged in.');
       this.router.navigate(['login'])
     }
