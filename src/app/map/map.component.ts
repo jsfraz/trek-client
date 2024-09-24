@@ -21,7 +21,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   // Map options
   options = {
     layers: [
-      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { minZoom: 2, maxZoom: 20, attribution: '' })
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { minZoom: 2, maxZoom: 19, attribution: '' })
     ],
     zoom: 5,
     center: latLng(53.5775, 23.106111)
@@ -204,7 +204,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     } else {
       // Load data from to
-      this.gnssDataService.getGnssRecordsByTimestamps({ id: this.selectedTracker!.id, offset: this.offset, fromUtc: this.from!.toUTCString(), toUtc: this.to!.toUTCString() }).subscribe({
+      this.gnssDataService.getGnssRecordsByTimestamps({ id: this.selectedTracker!.id, offset: this.offset, fromUtc: this.from!.toISOString(), toUtc: this.to!.toISOString() }).subscribe({
         next: (v) => {
           // success
           this.gnssSummary = v;
