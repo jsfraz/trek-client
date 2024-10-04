@@ -93,7 +93,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     flatpickr("#start-datetime", {
       enableTime: true,
       enableSeconds: true,
-      dateFormat: "d.m. Y H:i:s",
+      dateFormat: "d.m. Y H:i:ss",
       onChange: (selectedDates) => {
         this.from = selectedDates[0];
       }
@@ -102,7 +102,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     flatpickr("#end-datetime", {
       enableTime: true,
       enableSeconds: true,
-      dateFormat: "d.m. Y H:i:s",
+      dateFormat: "d.m. Y H:i:ss",
       onChange: (selectedDates) => {
         this.to = selectedDates[0];
       }
