@@ -1,6 +1,10 @@
 # trek-client
 
-Trek frontend for tracking your motorcycles or whatever.
+Client for the Trek project.
+
+- [Tracker](https://github.com/jsfraz/trek-tracker)
+- [Server](https://github.com/jsfraz/trek-server)
+- [Wiki](https://github.com/jsfraz/trek-client/wiki)
 
 <!--
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.1.
