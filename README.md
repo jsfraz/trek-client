@@ -6,6 +6,8 @@ Client for the Trek project.
 - [Server](https://github.com/jsfraz/trek-server)
 - [Wiki](https://github.com/jsfraz/trek-client/wiki)
 
+![Screen](images/screen.png "Screen")
+
 <!--
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.1.
 
