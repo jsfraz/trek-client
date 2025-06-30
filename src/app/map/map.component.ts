@@ -85,6 +85,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.socketService.on(this.eventName).subscribe((data) => {
       if (data != null) {
         this.showCurrent(data);
+      } else {
+        if (this.currentPoint != null) {
+          this.currentPoint.setStyle({ color: 'red', radius: 7.5, fill: true, fillColor: 'red', fillOpacity: 0.5});
+        }
       }
     });
   }
