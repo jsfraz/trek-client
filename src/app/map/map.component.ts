@@ -87,7 +87,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         this.showCurrent(data);
       } else {
         if (this.currentPoint != null) {
-          this.currentPoint.setStyle({ color: 'red', radius: 7.5, fill: true, fillColor: 'red', fillOpacity: 0.5});
+          this.currentPoint.setStyle({ color: 'gray', radius: 7.5, fill: true, fillColor: 'gray', fillOpacity: 1});
         }
       }
     });
