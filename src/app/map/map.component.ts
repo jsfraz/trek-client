@@ -268,6 +268,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.markers.forEach(x => {
       x.addTo(this.map);
     });
+    // Show start and end points
+    if (this.gnssSummary.data.length >= 2) {
+      const start = this.gnssSummary.data[0];
+      const end = this.gnssSummary.data[this.gnssSummary.data.length - 1];
+      Leaflet.marker({lat: start.latitude, lng: start.longitude}).addTo(this.map).bindPopup('Start');
+      Leaflet.marker({lat: end.latitude, lng: end.longitude}).addTo(this.map).bindPopup('End');
+    }
   }
 
   connects(date1: Date, date2: Date): boolean {
