@@ -34,6 +34,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedTracker: ModelsTracker | null = null;
   // Return all tracker data
   allData: boolean = false;
+  // Show start/end markers
+  showStartEndMarkers: boolean = true;
   // Show tracker in real time
   live: boolean = false;
   // From
@@ -51,6 +53,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   // Points
   markers: Leaflet.CircleMarker[] = [];
   points: boolean = false;
+  // Start/end markers
+  startEndMarkers: Leaflet.Marker[] = [];
   // Current point
   eventName: string = 'getCurrent';
   currentData: ModelsGnssData | null = null;
@@ -150,6 +154,46 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   allDataCheckboxChanged(): void {
     this.allData = !this.allData;
+  }
+
+  showStartEndMarkersCheckboxChanged(): void {
+    this.showStartEndMarkers = !this.showStartEndMarkers;
+    if (this.showStartEndMarkers) {
+      // Add start/end markers
+      if (this.gnssSummary != null) {
+        // Add start and end markers
+        if (this.gnssSummary.data.length >= 2 && this.showStartEndMarkers) {
+          // Start marker
+          const start = this.gnssSummary.data[0];
+          const startIcon = Leaflet.divIcon({
+            className: '',
+            html: "<div class='marker-pin marker-pin-start'><span class='marker-pin-inner'>START</span></div>",
+            iconSize: [48, 67],
+            iconAnchor: [24, 67]
+          });
+          this.startEndMarkers.push(Leaflet.marker({ lat: start.latitude, lng: start.longitude }, { icon: startIcon }));
+          // End marker
+          const end = this.gnssSummary.data[this.gnssSummary.data.length - 1];
+          const endIcon = Leaflet.divIcon({
+            className: '',
+            html: "<div class='marker-pin marker-pin-end'><span class='marker-pin-inner'>END</span></div>",
+            iconSize: [48, 67],
+            iconAnchor: [24, 67]
+          });
+          this.startEndMarkers.push(Leaflet.marker({ lat: end.latitude, lng: end.longitude }, { icon: endIcon }));
+        }
+        // Show markers on map
+        this.startEndMarkers.forEach(x => {
+          x.addTo(this.map);
+        });
+      }
+    } else {
+      // Delete start/end markers
+      this.startEndMarkers.forEach(x => {
+        x.remove();
+      });
+      this.startEndMarkers = [];
+    }
   }
 
   liveCheckboxChanged(): void {
@@ -260,6 +304,27 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         this.polylines.push(Leaflet.polyline(latlngs, { color: 'red' }).addTo(this.map));
       }
     }
+    // Add start and end markers
+    if (this.gnssSummary.data.length >= 2 && this.showStartEndMarkers) {
+      // Start marker
+      const start = this.gnssSummary.data[0];
+      const startIcon = Leaflet.divIcon({
+        className: '',
+        html: "<div class='marker-pin marker-pin-start'><span class='marker-pin-inner'>START</span></div>",
+        iconSize: [48, 67],
+        iconAnchor: [24, 67]
+      });
+      this.startEndMarkers.push(Leaflet.marker({ lat: start.latitude, lng: start.longitude }, { icon: startIcon }));
+      // End marker
+      const end = this.gnssSummary.data[this.gnssSummary.data.length - 1];
+      const endIcon = Leaflet.divIcon({
+        className: '',
+        html: "<div class='marker-pin marker-pin-end'><span class='marker-pin-inner'>END</span></div>",
+        iconSize: [48, 67],
+        iconAnchor: [24, 67]
+      });
+      this.startEndMarkers.push(Leaflet.marker({ lat: end.latitude, lng: end.longitude }, { icon: endIcon }));
+    }
     // Show polylines on map
     this.polylines.forEach(x => {
       x.addTo(this.map);
@@ -268,22 +333,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.markers.forEach(x => {
       x.addTo(this.map);
     });
-    // Show start and end points
-    if (this.gnssSummary.data.length >= 2) {
-      const start = this.gnssSummary.data[0];
-      const end = this.gnssSummary.data[this.gnssSummary.data.length - 1];
-      /*
-      Leaflet.marker({lat: start.latitude, lng: start.longitude}).addTo(this.map);
-      Leaflet.marker({lat: end.latitude, lng: end.longitude}).addTo(this.map);
-      */
-      const startIcon = Leaflet.divIcon({
-        className: '',
-        html: "<div class='marker-pin marker-pin-start'><span class='marker-pin-inner'>START</span></div>",
-        iconSize: [48, 67],
-        iconAnchor: [24, 67]
-      });
-      Leaflet.marker({lat: start.latitude, lng: start.longitude}, {icon: startIcon}).addTo(this.map);
-    }
+    this.startEndMarkers.forEach(x => {
+      x.addTo(this.map);
+    });
   }
 
   connects(date1: Date, date2: Date): boolean {
@@ -308,10 +360,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       x.remove();
     });
     this.markers = [];
+    // Delete start/end markers
+    this.startEndMarkers.forEach(x => {
+      x.remove();
+    });
+    this.startEndMarkers = [];
   }
 
   canClear(): boolean {
-    return this.polylines.length != 0 || this.polylines.length != 0;
+    return this.polylines.length != 0 || this.markers.length != 0 || this.startEndMarkers.length != 0;
   }
 
   onMarkerMouseOver(event: Leaflet.LeafletEvent, description: string) {

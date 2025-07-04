@@ -105,6 +105,13 @@
                     matTooltip="Show every location and it's data"
                     class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
             </label>
+            <!-- Show start/end markers -->
+            <label class="dark:text-white" [hidden]="selectedTracker == null">
+                Show start/end markers
+                <input type="checkbox" (change)="showStartEndMarkersCheckboxChanged()" [checked]="showStartEndMarkers"
+                    matTooltip="Show start and end markers on the map"
+                    class="ml-1 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" />
+            </label>
             <!-- Live checkbox -->
             <label class="dark:text-white" [hidden]="selectedTracker == null">
                 Live
