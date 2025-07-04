@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "angular.ng-template",
+        "firefox-devtools.vscode-firefox-debug",
+        "bierner.markdown-preview-github-styles",
+        "davidanson.vscode-markdownlint",
+        "gruntfuggly.todo-tree"
+    ]
+}

@@ -87,7 +87,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         this.showCurrent(data);
       } else {
         if (this.currentPoint != null) {
-          this.currentPoint.setStyle({ color: 'gray', radius: 7.5, fill: true, fillColor: 'gray', fillOpacity: 1});
+          this.currentPoint.setStyle({ color: 'gray', radius: 7.5, fill: true, fillColor: 'gray', fillOpacity: 1 });
         }
       }
     });
@@ -272,8 +272,16 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.gnssSummary.data.length >= 2) {
       const start = this.gnssSummary.data[0];
       const end = this.gnssSummary.data[this.gnssSummary.data.length - 1];
-      Leaflet.marker({lat: start.latitude, lng: start.longitude}).addTo(this.map).bindPopup('Start');
-      Leaflet.marker({lat: end.latitude, lng: end.longitude}).addTo(this.map).bindPopup('End');
+      /*
+      Leaflet.marker({lat: start.latitude, lng: start.longitude}).addTo(this.map);
+      Leaflet.marker({lat: end.latitude, lng: end.longitude}).addTo(this.map);
+      */
+      const startIcon = Leaflet.divIcon({
+        html: "<div class='marker-pin marker-pin-start'><span class='marker-pin-inner'>START</span></div>",
+        iconSize: [55, 77],
+        iconAnchor: [27.5, 77]
+      });
+      Leaflet.marker({lat: start.latitude, lng: start.longitude}, {icon: startIcon}).addTo(this.map);
     }
   }
 
