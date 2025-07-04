@@ -8,38 +8,3 @@
     max-height: calc(100vh - 166px);
     height: calc(100vh - 166px);
 }
-
-.marker-pin {
-    width: 55px;
-    height: 55px;
-    border-radius: 50% 50% 50% 0;
-    position: absolute;
-    transform: rotate(-45deg);
-    left: 50%;
-    top: 50%;
-    margin: -15px 0 0 -15px;
-}
-
-.marker-pin-start {
-    background: #008000;
-}
-
-.marker-pin-end {
-    background: #C76E00;
-}
-
-.marker-pin-inner {
-    width: 45px;
-    height: 45px;
-    margin: 5px 0 0 5px;
-    background: #fff;
-    position: absolute;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    color: #000;
-    text-align: center;
-    transform: rotate(45deg);
-}

@@ -21,3 +21,39 @@ body {
 .mat-mdc-dialog-container {
     --mdc-dialog-container-shape: 0.75rem;
 }
+
+/* Custom map marker styles */
+.marker-pin {
+    width: 48px;
+    height: 48px;
+    border-radius: 50% 50% 50% 0;
+    position: absolute;
+    transform: rotate(-45deg);
+    left: 50%;
+    top: 50%;
+    margin: -15px 0 0 -15px;
+}
+
+.marker-pin-start {
+    background: #008000;
+}
+
+.marker-pin-end {
+    background: #C76E00;
+}
+
+.marker-pin-inner {
+    width: 40px;
+    height: 40px;
+    margin: 4px 0 0 4px;
+    background: #fff;
+    position: absolute;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #000;
+    text-align: center;
+    transform: rotate(45deg);
+}

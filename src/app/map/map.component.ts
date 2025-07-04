@@ -278,8 +278,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       */
       const startIcon = Leaflet.divIcon({
         html: "<div class='marker-pin marker-pin-start'><span class='marker-pin-inner'>START</span></div>",
-        iconSize: [55, 77],
-        iconAnchor: [27.5, 77]
+        iconSize: [48, 67],
+        iconAnchor: [24, 67]
       });
       Leaflet.marker({lat: start.latitude, lng: start.longitude}, {icon: startIcon}).addTo(this.map);
     }
