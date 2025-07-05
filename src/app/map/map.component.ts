@@ -441,6 +441,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       x.remove();
     });
     this.markers = [];
+    this.startEndMarkers.forEach(x => {
+      x.remove();
+    });
+    this.startEndMarkers = [];
     this.points = false;
   }
 
