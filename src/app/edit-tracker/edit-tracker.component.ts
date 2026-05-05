@@ -5,9 +5,10 @@ import { AlertComponent } from '../alert/alert.component';
 import { TrackerService } from '../api/services';
 
 @Component({
-  selector: 'app-edit-tracker',
-  templateUrl: './edit-tracker.component.html',
-  styleUrls: ['./edit-tracker.component.css']
+    selector: 'app-edit-tracker',
+    templateUrl: './edit-tracker.component.html',
+    styleUrls: ['./edit-tracker.component.css'],
+    standalone: false
 })
 export class EditTrackerComponent {
   updateForm: FormGroup;

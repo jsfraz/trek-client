@@ -11,9 +11,10 @@ import { AuthService } from '../shared/auth.service';
 import { SocketService } from '../shared/socket.service';
 
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+    selector: 'app-map',
+    templateUrl: './map.component.html',
+    styleUrls: ['./map.component.css'],
+    standalone: false
 })
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   // Map

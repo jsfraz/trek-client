@@ -6,9 +6,10 @@ import { TrackerService } from '../api/services';
 import { TokenComponent } from '../token/token.component';
 
 @Component({
-  selector: 'app-create-tracker',
-  templateUrl: './create-tracker.component.html',
-  styleUrls: ['./create-tracker.component.css']
+    selector: 'app-create-tracker',
+    templateUrl: './create-tracker.component.html',
+    styleUrls: ['./create-tracker.component.css'],
+    standalone: false
 })
 export class CreateTrackerComponent {
   createForm: FormGroup;

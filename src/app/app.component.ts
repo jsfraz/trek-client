@@ -1,6 +1,6 @@
-import { Component, OnInit, Renderer2, Inject } from '@angular/core';
+import { Component, OnInit, Renderer2, Inject, DOCUMENT } from '@angular/core';
 import { initFlowbite } from 'flowbite';
-import { DOCUMENT } from '@angular/common';
+
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UserService } from './api/services';
@@ -8,9 +8,10 @@ import { AuthService } from './shared/auth.service';
 import { Utils } from 'src/main';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css'],
+    standalone: false
 })
 export class AppComponent implements OnInit {
   title = 'Trek';

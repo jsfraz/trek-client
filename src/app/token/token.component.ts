@@ -3,9 +3,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
-  selector: 'app-token',
-  templateUrl: './token.component.html',
-  styleUrls: ['./token.component.css']
+    selector: 'app-token',
+    templateUrl: './token.component.html',
+    styleUrls: ['./token.component.css'],
+    standalone: false
 })
 export class TokenComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: string, public dialogRef: MatDialogRef<TokenComponent>, private clipboard: Clipboard) { }
