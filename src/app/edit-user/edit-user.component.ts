@@ -6,9 +6,10 @@ import { ModelsUser } from '../api/models';
 import { UserService } from '../api/services';
 
 @Component({
-  selector: 'app-edit-user',
-  templateUrl: './edit-user.component.html',
-  styleUrls: ['./edit-user.component.css']
+    selector: 'app-edit-user',
+    templateUrl: './edit-user.component.html',
+    styleUrls: ['./edit-user.component.css'],
+    standalone: false
 })
 export class EditUserComponent {
   updateForm: FormGroup;

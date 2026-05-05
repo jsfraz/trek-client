@@ -8,9 +8,10 @@ import { EditTrackerComponent } from '../edit-tracker/edit-tracker.component';
 import { TokenComponent } from '../token/token.component';
 
 @Component({
-  selector: 'app-tracker',
-  templateUrl: './tracker.component.html',
-  styleUrls: ['./tracker.component.css']
+    selector: 'app-tracker',
+    templateUrl: './tracker.component.html',
+    styleUrls: ['./tracker.component.css'],
+    standalone: false
 })
 export class TrackerComponent implements OnInit {
   trackers: ModelsTracker[] = [];

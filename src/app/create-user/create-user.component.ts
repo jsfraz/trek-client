@@ -5,9 +5,10 @@ import { UserService } from '../api/services';
 import { AlertComponent } from '../alert/alert.component';
 
 @Component({
-  selector: 'app-create-user',
-  templateUrl: './create-user.component.html',
-  styleUrls: ['./create-user.component.css']
+    selector: 'app-create-user',
+    templateUrl: './create-user.component.html',
+    styleUrls: ['./create-user.component.css'],
+    standalone: false
 })
 export class CreateUserComponent {
   createForm: FormGroup;
