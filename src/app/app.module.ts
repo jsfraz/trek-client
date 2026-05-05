@@ -21,7 +21,7 @@ import { SetupComponent } from './setup/setup.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ApiModule } from './api/api.module';
 import { environment } from 'src/environments/environment';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletModule } from '@bluehalo/ngx-leaflet';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 
 @NgModule({
