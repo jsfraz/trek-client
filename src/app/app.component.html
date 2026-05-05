@@ -42,7 +42,7 @@
                 <li>
                   <a (click)="this.authService.logout()"
                     class="cursor-pointer block px-4 py-2 text-sm dark:text-red-600 text-red-700 hover:bg-gray-100 dark:hover:bg-gray-600"
-                    role="menuitem">Sign out</a>
+                  role="menuitem">Sign out</a>
                 </li>
               </ul>
             </div>
@@ -63,27 +63,33 @@
             <span class="ml-3">Map</span>
           </a>
         </li>
-        <li *ngIf="this.authService.currentUser == null ? false : this.authService.currentUser.superuser">
-          <a (click)="this.router.navigate(['users'])"
-            class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <i class="bi bi-people-fill"></i>
-            <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
-          </a>
-        </li>
-        <li *ngIf="this.authService.currentUser == null ? false : this.authService.currentUser.superuser">
-          <a (click)="this.router.navigate(['trackers'])"
-            class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <i class="bi bi-geo-fill"></i>
-            <span class="flex-1 ml-3 whitespace-nowrap">Trackers</span>
-          </a>
-        </li>
-        <li *ngIf="this.authService.currentUser == null ? false : this.authService.currentUser.superuser">
-          <a (click)="this.router.navigate(['setup'])"
-            class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <i class="bi bi-tools"></i>
-            <span class="flex-1 ml-3 whitespace-nowrap">Setup</span>
-          </a>
-        </li>
+        @if (this.authService.currentUser == null ? false : this.authService.currentUser.superuser) {
+          <li>
+            <a (click)="this.router.navigate(['users'])"
+              class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <i class="bi bi-people-fill"></i>
+              <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
+            </a>
+          </li>
+        }
+        @if (this.authService.currentUser == null ? false : this.authService.currentUser.superuser) {
+          <li>
+            <a (click)="this.router.navigate(['trackers'])"
+              class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <i class="bi bi-geo-fill"></i>
+              <span class="flex-1 ml-3 whitespace-nowrap">Trackers</span>
+            </a>
+          </li>
+        }
+        @if (this.authService.currentUser == null ? false : this.authService.currentUser.superuser) {
+          <li>
+            <a (click)="this.router.navigate(['setup'])"
+              class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <i class="bi bi-tools"></i>
+              <span class="flex-1 ml-3 whitespace-nowrap">Setup</span>
+            </a>
+          </li>
+        }
       </ul>
       <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
         <li>
@@ -101,6 +107,6 @@
       <router-outlet></router-outlet>
     </div>
   </div>
-  } @else {
+} @else {
   <router-outlet></router-outlet>
-  }
+}
